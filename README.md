@@ -1,4 +1,4 @@
-# Middlegame · Singapore — concept mockup
+# The Enough Point · Singapore — concept mockup
 
 **Status: MOCKUP. Not a live site, not a product, not a claim.**
 
@@ -19,16 +19,21 @@ The page carries `noindex, nofollow, noarchive` and is not listed on the landing
 
 ## Brand name
 
-`Middlegame` is a **placeholder**, chosen because `fireat40.com` is registered and a numeric name dates the brand and contradicts the intended audience. Not decided, not registered, no trade mark search done. To swap it, change:
+**The Enough Point**, chosen 2026-07-17 over the `Middlegame` placeholder and over `FireAt40` (whose `.com` is registered, and whose numeric name dates the brand and contradicts the intended audience of early-30s to 50s).
 
-- `<h1 id="brand">` in `template.html`
-- `<title>` in `template.html`
-- this file, and the repo/folder name
+The name and the product landed on each other by accident, which is a point in its favour: the hero calculator was already called "the enough point" before the name was picked. The site's hallmark tool *is* the brand. The hero tool is now labelled "Your enough point" to avoid reading as a tautology against the wordmark.
+
+**Still open:**
+
+- **TLD undecided.** As of 2026-07-17 both `theenoughpoint.com` and `theenoughpoint.sg` return no nameservers, which is a proxy for unregistered, **not proof** — verify at a registrar before relying on either. `.com` pairs naturally because the name is not geographic; `.sg` would signal the Singapore-specificity that is the actual moat. The wordmark deliberately carries no TLD so it does not commit.
+- **Nothing registered.** No domain, no IPOS trade mark search in classes 36 and 41. "The enough point" is a coined phrase rather than a description of financial services, so it is a plausible mark — but plausible is not searched.
+
+To swap the name again, change `<a id="brand">` and `<title>` in `template.html`, this file, and the repo/folder name.
 
 ## Structure
 
 ```
-middlegame-sg/
+theenoughpoint/
 ├── template.html     # source — the only file you edit
 ├── docs/index.html   # GitHub Pages output (currently a straight copy of template.html)
 └── README.md
