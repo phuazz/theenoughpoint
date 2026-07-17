@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f7f2e9">
+<meta name="format-detection" content="telephone=no">
+<!-- Mockup: keep out of search indexes. Remove only when this becomes a real site. -->
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="googlebot" content="noindex, nofollow">
+<title>The Enough Point · Singapore — warm variant</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Tokens — copied verbatim from C:\dev\design.md. Do not fork.
+   ============================================================ */
+:root{
+  --bg:#fafaf8; --bg2:#ffffff; --bg3:#f5f5f0; --bg4:#eeeee8; --bg-hover:#f0f0ea;
+  --bd:#e2e0d8; --bd2:#d5d3ca; --bd-strong:#c0beb5;
+  --t1:#1a1a18; --t2:#5c5c56; --t3:#8a8a82; --t4:#b0b0a8;
+  --g:#1a8754; --g2:#22a366; --g-bg:rgba(26,135,84,0.07); --g-bg2:rgba(26,135,84,0.14);
+  --r:#c0392b; --r2:#e74c3c; --r-bg:rgba(192,57,43,0.07); --r-bg2:rgba(192,57,43,0.14);
+  --b:#2563eb; --b2:#3b82f6; --b-bg:rgba(37,99,235,0.06); --b-bg2:rgba(37,99,235,0.12);
+  --a:#b45309; --a-bg:rgba(180,83,9,0.07);
+  --p:#7c3aed; --p-bg:rgba(124,58,237,0.06);
+  --c:#0891b2; --c-bg:rgba(8,145,178,0.06);
+  --pk:#be185d; --pk-bg:rgba(190,24,93,0.06);
+  --g-text:#146c43; --r-text:#a93226; --b-text:#1d4ed8; --a-text:#92400e;
+  --p-text:#7c3aed; --c-text:#0e7490; --pk-text:#be185d; --t3-text:#66665e;
+  --serif:'Instrument Serif',Georgia,serif; --sans:'DM Sans',-apple-system,sans-serif; --mono:'JetBrains Mono','SF Mono','Menlo',monospace;
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.04);
+  --shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:0 4px 6px rgba(0,0,0,0.05),0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg:0 10px 15px rgba(0,0,0,0.06),0 4px 6px rgba(0,0,0,0.04);
+  --radius:8px; --radius-lg:12px;
+
+  /* ---- LANDING scale — NOT in design.md yet. See README "Third scale".
+     design.md defines dashboard (11px labels / 13px body) and document
+     (16px body). A landing page is neither: it persuades. Measured from
+     Linear / Stripe / Ramp / Mercury / FT, July 2026. ---- */
+  --sec-pad:96px;        /* section rhythm. Linear=128, Stripe=96, Ramp=64. Dashboards use ~20. */
+  --display:clamp(40px,5.6vw,66px);
+  --display-lh:1.02;     /* measured modal is 1.0 at 64px; Instrument Serif needs a hair more */
+  --display-ls:-0.022em; /* Linear's Inter value; closest fit to our stack */
+  --lede:19px;
+  --body:17px;           /* consumer fintech sits 17-18, not the 15 dev-tools use */
+  --measure:62ch;        /* prose line length. Linear measures ~66ch. */
+}
+
+/* ============================================================
+   WARM VARIANT overrides — layered ON TOP of the design.md tokens
+   above, never editing them. This is the "warm green lifestyle"
+   direction: ivory paper, forest-green brand, deep-green panels.
+   The identity green is a distinct token (--brand); the semantic
+   gain/loss greens from design.md are left intact. Where a warm
+   accent is needed against the green (the calculator target line),
+   a clay token carries it — never blue, which fights the warmth.
+   ============================================================ */
+:root{
+  /* warm surfaces (replace the neutral off-whites) */
+  --bg:#f7f2e9; --bg2:#fffdf9; --bg3:#f0e9db; --bg4:#e8dfcd; --bg-hover:#efe7d7;
+  --bd:#e6ddca; --bd2:#d8ceb6; --bd-strong:#c4b89a;
+  /* brand identity — forest green, distinct from semantic --g */
+  --brand:#15603c; --brand2:#1a7a4c; --brand-deep:#0f3f28;
+  --brand-bg:rgba(21,96,60,0.07); --brand-bg2:rgba(21,96,60,0.14); --brand-text:#135a37;
+  /* warm contrast accent for the calculator target line */
+  --clay:#b5643a; --clay-text:#9a4f2c;
+  /* the page uses --g for progress/gain and --b-text for links; repoint both
+     to the brand green so the whole page reads in one warm family. The
+     trajectory TARGET line is switched to --clay in the script below so it
+     stays distinct from the brand-green gain curve. */
+  --g:#15603c; --g2:#1a7a4c; --g-bg:rgba(21,96,60,0.07); --g-bg2:rgba(21,96,60,0.14); --g-text:#135a37;
+  --b:#15603c; --b2:#1a7a4c; --b-bg:rgba(21,96,60,0.06); --b-bg2:rgba(21,96,60,0.14); --b-text:#135a37;
+  /* sage text for use on the deep-green panels */
+  --on-deep:#a9c4b4; --on-deep-2:#c8dccf;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1220px;margin:0 auto;padding:0 32px}   /* FT digital grid is 1220 */
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* machine-facing text is sans; editorial voice is serif. FT's rule. */
+.lbl{font-family:var(--sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--t3-text)}
+
+/* ============================================================
+   Nav
+   ============================================================ */
+.nav{position:sticky;top:0;z-index:50;background:rgba(250,250,248,0.85);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--bd)}
+.nav-in{max-width:1220px;margin:0 auto;padding:0 32px;height:68px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.logo{font-family:var(--serif);font-size:23px;letter-spacing:-0.3px;white-space:nowrap}
+.logo em{font-style:italic;color:var(--t3)}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-size:14px;font-weight:500;color:var(--t2);white-space:nowrap}
+.nav-links a:hover{color:var(--t1)}
+.nav-right{display:flex;gap:10px;align-items:center}
+.pill{font-family:var(--sans);font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;border:1px solid;display:inline-flex;gap:6px;align-items:center;white-space:nowrap}
+.pill-warn{background:var(--a-bg);color:var(--a-text);border-color:rgba(180,83,9,0.2)}
+.btn{font-family:var(--sans);font-size:14px;font-weight:500;padding:0 18px;height:42px;border-radius:var(--radius);border:1px solid var(--t1);background:var(--t1);color:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:background .15s ease}
+.btn:hover{background:#000}
+.btn.ghost{background:none;color:var(--t1);border-color:var(--bd2)}
+.btn.ghost:hover{background:var(--bg-hover);border-color:var(--bd-strong)}
+.btn.sm{height:36px;font-size:13px;padding:0 14px}
+
+/* ============================================================
+   Hero — full-bleed, not carded. No entrance motion (Linear/Stripe
+   both ship animation-name:none on the h1).
+   ============================================================ */
+.hero{padding:clamp(44px,5.5vw,84px) 0 clamp(40px,5vw,72px)}
+.hero-in{display:grid;grid-template-columns:1.05fr 0.95fr;gap:64px;align-items:center}
+h1{font-family:var(--serif);font-weight:400;font-size:var(--display);line-height:var(--display-lh);letter-spacing:var(--display-ls)}
+h1 em{font-style:italic;color:var(--t3)}
+.lede{font-size:var(--lede);line-height:1.55;color:var(--t2);margin-top:24px;max-width:var(--measure)}
+.hero-cta{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.hero-note{font-size:13px;color:var(--t3-text);margin-top:18px}
+
+/* ---- the calculator: the tool IS the product, so it leads.
+   Wise pattern — pre-computed on load, no empty state, no submit. ---- */
+.calc{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);overflow:hidden}
+.calc-head{padding:16px 24px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--bg3)}
+.calc-body{padding:16px 24px 18px}
+
+/* ---- slider-led fields. The inputs here are all estimates — nobody knows
+   their annual spend to the dollar — so a slider is the honest affordance:
+   it says "drag me" where an empty box says "go find your statement".
+   The number stays typeable and bound both ways for anyone who does know. ---- */
+.f{margin-bottom:13px}
+.f:last-child{margin-bottom:0}
+.f-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:7px}
+.f-top label{font-size:13px;font-weight:500;color:var(--t2)}
+.f-val{display:flex;align-items:baseline;font-family:var(--mono);font-size:16px;font-weight:600;color:var(--t1)}
+.f-val .pre{color:var(--t3-text);margin-right:1px}
+.f-val input{font-family:var(--mono);font-size:16px;font-weight:600;color:var(--t1);background:none;border:none;border-bottom:1px dashed var(--bd2);text-align:right;padding:0 0 1px;width:5.2ch;transition:border-color .12s ease}
+.f-val input.w-lg{width:9.2ch}   /* fits "3,000,000" without clipping */
+.f-val input:hover{border-bottom-color:var(--t3)}
+.f-val input:focus{outline:none;border-bottom:1px solid var(--b);color:var(--b-text)}
+
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:var(--bg4);border-radius:999px;outline:none;margin:0;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;background:var(--t1);border:2px solid var(--bg2);box-shadow:var(--shadow-sm);cursor:grab}
+input[type=range]::-webkit-slider-thumb:active{cursor:grabbing;transform:scale(1.1)}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--t1);border:2px solid var(--bg2);box-shadow:var(--shadow-sm);cursor:grab}
+input[type=range]:focus-visible{box-shadow:0 0 0 3px var(--b-bg2)}
+.f-hint{font-size:11px;color:var(--t3-text);margin-top:5px}
+
+/* ---- trajectory: the pot compounding to the target.
+   Semantic per design.md — green is the gain, blue is the benchmark line.
+   No text inside the viewBox, so the SVG text-scaling trap does not apply. ---- */
+.traj{padding:2px 24px 0;background:var(--bg2)}
+.traj svg{display:block;width:100%;height:72px}   /* viewBox stays 82; preserveAspectRatio=none scales it */
+.traj-x{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--t3-text);margin-top:2px}
+
+/* ---- progress: how far along you already are. Green = gain, per the system. ---- */
+.prog{padding:0 24px 18px;background:var(--bg2)}
+.prog-t{height:6px;background:var(--bg4);border-radius:999px;overflow:hidden}
+.prog-f{height:100%;background:var(--g);border-radius:999px;width:0;transition:width .25s cubic-bezier(.4,0,.2,1)}
+.prog-l{display:flex;justify-content:space-between;align-items:baseline;margin-top:7px;font-size:11px;color:var(--t3-text)}
+.prog-l b{font-family:var(--mono);font-size:12px;color:var(--g-text)}
+
+.out{background:var(--t1);color:#fff;padding:18px 24px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.out-l{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#b0b0a8}
+.out-v{font-family:var(--serif);font-size:46px;line-height:1;letter-spacing:-1px}
+.out-s{font-family:var(--mono);font-size:12px;color:#b0b0a8;margin-top:8px;width:100%}
+.assump{padding:12px 24px;background:var(--bg3);border-top:1px solid var(--bd);font-size:11px;color:var(--t3-text);line-height:1.5}
+
+/* ============================================================
+   Social proof — flush under hero, never inside it. Ramp/Stripe/Mercury.
+   ============================================================ */
+.proof{border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);background:var(--bg3)}
+.proof-in{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;padding:28px 0}
+.proof-i .k{font-family:var(--mono);font-size:26px;font-weight:600;letter-spacing:-0.5px}
+.proof-i .v{font-size:13px;color:var(--t2);margin-top:2px}
+
+/* ============================================================
+   Sections
+   ============================================================ */
+section{padding:var(--sec-pad) 0}
+.sec-h{margin-bottom:44px;max-width:var(--measure)}
+.sec-h h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,3.4vw,42px);line-height:1.1;letter-spacing:-0.5px;margin-top:12px}
+.sec-h p{font-size:var(--body);color:var(--t2);margin-top:14px}
+.sec-h.row{max-width:none;display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+.more{font-size:14px;font-weight:500;color:var(--b-text);white-space:nowrap}
+.more:hover{text-decoration:underline}
+
+/* ---- tools = product surface, so cards are correct here ---- */
+.tools{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.tool{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);padding:24px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow-sm);transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+.tool:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--bd2)}
+.tool .k{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:1px;color:var(--t3-text)}
+.tool .n{font-family:var(--serif);font-size:24px;line-height:1.15;letter-spacing:-0.3px;margin-top:2px}
+.tool .d{font-size:14px;color:var(--t2);line-height:1.5;flex:1}
+.tool .go{font-size:13px;font-weight:600;color:var(--b-text);margin-top:6px}
+
+/* ---- editorial = rules, never cards. FT/NYT/Economist are unanimous;
+   the Economist explicitly ships box-shadow:none. ---- */
+.ed{display:grid;grid-template-columns:1.55fr 1fr;gap:56px;align-items:start}
+.kicker{font-family:var(--sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--c-text)}
+.lead-img{aspect-ratio:16/9;background:var(--bg4);border:1px solid var(--bd);border-radius:var(--radius);display:grid;place-items:center;font-family:var(--mono);font-size:11px;color:var(--t3-text);letter-spacing:1px;margin-bottom:20px}
+.lead h3{font-family:var(--serif);font-weight:400;font-size:40px;line-height:1.1;letter-spacing:-0.5px;margin:10px 0 12px}   /* 40 : 20 = the 2.0x broadsheet ratio */
+.lead:hover h3{color:var(--b-text)}
+.standfirst{font-size:var(--body);color:var(--t2);line-height:1.6;max-width:58ch}
+.meta{font-family:var(--sans);font-size:12px;color:var(--t3-text);margin-top:14px}
+
+/* secondaries are DEMOTED — the lead just inherits. FT's own mechanism:
+   drift-proof, because a new story defaults to prominent. */
+.sec-list{border-top:1px solid var(--bd)}
+.sec-item{display:block;padding:22px 0;border-bottom:1px solid var(--bd)}
+.sec-item h4{font-family:var(--serif);font-weight:400;font-size:20px;line-height:1.25;letter-spacing:-0.2px;margin:8px 0 0}
+.sec-item:hover h4{color:var(--b-text)}
+.sec-item .meta{margin-top:10px}
+
+/* ---- sponsored: whitespace + a typographic shift, at most a hairline.
+   NOT a tinted box — that is the cheap tell. FT sandwiches between two
+   hairlines; NYT uses pure whitespace. Label is sans, above, own line.
+   The lowercase+small-caps trick is the Economist's. ---- */
+.spon{border-top:1px solid var(--bd2);border-bottom:1px solid var(--bd2);padding:32px 0;margin:var(--sec-pad) 0 0}
+.spon-lbl{font-family:var(--sans);font-size:15px;font-weight:400;text-transform:lowercase;font-variant:small-caps;letter-spacing:0.06em;color:var(--t2)}
+.spon-lbl b{font-weight:600;color:var(--t1)}
+.spon-in{display:grid;grid-template-columns:200px 1fr auto;gap:32px;align-items:center;margin-top:18px}
+.spon-logo{height:88px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);display:grid;place-items:center;font-family:var(--mono);font-size:10px;color:var(--t3-text);letter-spacing:1px}
+.spon-in h4{font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.2;letter-spacing:-0.3px}
+.spon-in p{font-size:15px;color:var(--t2);margin-top:8px;max-width:56ch}
+
+/* ---- newsletter ---- */
+.news{background:var(--t1);color:#fff;border-radius:var(--radius-lg);padding:56px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center}
+.news h2{font-family:var(--serif);font-weight:400;font-size:40px;line-height:1.1;letter-spacing:-0.5px}
+.news p{font-size:15px;color:#b0b0a8;margin-top:12px;max-width:46ch;line-height:1.6}
+.news-form{display:flex;gap:10px}
+.news-form input{font-family:var(--sans);font-size:15px;padding:0 16px;height:52px;border:1px solid #3a3a36;background:#262622;color:#fff;border-radius:var(--radius);min-width:260px}
+.news-form input::placeholder{color:var(--t3)}
+.news-form input:focus{outline:none;border-color:#6a6a62}
+.news-form button{font-family:var(--sans);font-size:15px;font-weight:600;padding:0 24px;height:52px;border:none;border-radius:var(--radius);background:#fff;color:var(--t1);cursor:pointer;white-space:nowrap}
+.news-form button:hover{background:#eeeee8}
+
+/* ---- footer ---- */
+.disc{border-top:1px solid var(--bd);padding:32px 0;font-size:13px;color:var(--t2);line-height:1.65;max-width:var(--measure)}
+.disc b{color:var(--t1)}
+.foot{border-top:1px solid var(--bd);padding:32px 0 64px;font-size:12px;color:var(--t3-text);line-height:1.65}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media(max-width:1080px){
+  :root{--sec-pad:72px}
+  .tools{grid-template-columns:repeat(2,1fr)}
+  .ed{grid-template-columns:1fr;gap:44px}
+  .lead h3{font-size:34px}
+  .nav-links{display:none}
+}
+@media(max-width:860px){
+  .hero-in{grid-template-columns:1fr;gap:44px}
+  .proof-in{grid-template-columns:repeat(2,1fr);gap:24px}
+  .spon-in{grid-template-columns:1fr;gap:20px}
+  .news{grid-template-columns:1fr;padding:36px;gap:28px}
+  .news-form{width:100%}
+  .news-form input{flex:1;min-width:0}
+}
+@media(max-width:560px){
+  :root{--sec-pad:56px;--body:16px;--lede:17px}
+  .wrap,.nav-in{padding:0 18px}
+  .tools{grid-template-columns:1fr}
+  .out-v{font-size:38px}
+  .news{padding:26px}
+  .news-form{flex-direction:column}
+}
+/* touch: 44px minimum tap target per design.md */
+@media(pointer:coarse){
+  .btn.sm{height:44px}
+  /* a thumb you can actually catch with a thumb; taller hit-area on the track */
+  input[type=range]{height:6px;padding:14px 0;background-clip:content-box}
+  input[type=range]::-webkit-slider-thumb{width:26px;height:26px}
+  input[type=range]::-moz-range-thumb{width:22px;height:22px}
+}
+/* the top tier ships no entrance motion on hero type; honour the preference anyway */
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+
+/* ============================================================
+   WARM VARIANT — component overrides (cascade wins by order)
+   ============================================================ */
+/* compare strip so the A/B is obvious */
+.cmp{background:var(--brand-deep);color:var(--on-deep-2);font-size:12px;text-align:center;padding:7px 16px}
+.cmp b{color:#fff;font-weight:600}
+.cmp a{color:#fff;text-decoration:underline;text-underline-offset:2px}
+
+/* nav on warm paper */
+.nav{background:rgba(247,242,233,0.85);border-bottom:1px solid var(--bd)}
+.logo{display:inline-flex;align-items:center;gap:8px;color:var(--t1)}
+.logo .leaf{width:22px;height:22px;flex:none}
+
+/* primary button = forest green */
+.btn{background:var(--brand);border-color:var(--brand)}
+.btn:hover{background:var(--brand-deep);border-color:var(--brand-deep)}
+.btn.ghost{background:none;color:var(--brand-text);border-color:var(--bd2)}
+.btn.ghost:hover{background:var(--brand-bg);border-color:var(--brand)}
+
+/* green eyebrows */
+.kicker{color:var(--brand-text)}
+
+/* slider thumb in brand green */
+input[type=range]::-webkit-slider-thumb{background:var(--brand)}
+input[type=range]::-moz-range-thumb{background:var(--brand)}
+
+/* deep-green result panel (was near-black) */
+.out{background:var(--brand-deep)}
+.out-l,.out-s{color:var(--on-deep)}
+
+/* deep-green newsletter panel */
+.news{background:var(--brand-deep)}
+.news p{color:var(--on-deep)}
+.news-form input{background:#0b3320;border-color:#1c5238}
+.news-form input::placeholder{color:#6f8f7e}
+.news-form input:focus{border-color:#3f7a5c}
+.news-form button{background:#fff;color:var(--brand-deep);font-weight:600}
+.news-form button:hover{background:var(--bg3)}
+
+/* age chips — the one genuinely good idea borrowed from the reference */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.chip{font-family:var(--sans);font-size:13px;font-weight:500;padding:7px 15px;border-radius:999px;border:1px solid var(--bd2);background:var(--bg2);color:var(--t2);cursor:pointer;min-height:38px;display:inline-flex;align-items:center;transition:all .14s ease}
+.chip:hover{border-color:var(--brand);color:var(--brand-text)}
+.chip.on{background:var(--brand);border-color:var(--brand);color:#fff}
+@media(pointer:coarse){.chip{min-height:44px}}
+</style>
+</head>
+<body>
+
+<!-- compare strip: makes the A/B against the austere version explicit -->
+<div class="cmp">Visual direction: <b>warm</b> — <a href="./">see the austere version →</a></div>
+
+<!-- ============ nav ============ -->
+<nav class="nav">
+  <div class="nav-in">
+    <a class="logo" href="#" id="brand"><svg class="leaf" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 4C10 4 4 10 4 20c8 0 16-5 16-16Z" fill="var(--brand)"/><path d="M7 17c4-6 8-8 11-9" stroke="#fffdf9" stroke-width="1.5" stroke-linecap="round"/></svg>The Enough Point</a>
+    <div class="nav-links">
+      <a href="#tools">Tools</a>
+      <a href="#reading">Reading</a>
+      <a href="#">Value living</a>
+      <a href="#">About</a>
+    </div>
+    <div class="nav-right">
+      <span class="pill pill-warn">MOCKUP</span>
+      <button class="btn sm">Subscribe</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ hero ============ -->
+<header class="hero">
+  <div class="wrap hero-in">
+    <div>
+      <h1>The decisions that set up your <em>second half</em> get made now.</h1>
+      <p class="lede">Property, portfolio, insurance, and whether you can afford to stop. Singapore has no shortage of opinions about your money. This gives you your own numbers instead.</p>
+      <div class="hero-cta">
+        <a class="btn" href="#tools">Browse the tools</a>
+        <a class="btn ghost" href="#reading">Read this week</a>
+      </div>
+      <p class="hero-note">Free. No account. Every calculator shows its workings.</p>
+    </div>
+
+    <!-- the tool leads: pre-computed on load, no empty state, no submit button -->
+    <div class="calc">
+      <div class="calc-head">
+        <span class="lbl">Your enough point</span>
+        <span class="lbl" style="color:var(--b-text)">Live →</span>
+      </div>
+      <div class="calc-body">
+        <div class="f">
+          <div class="f-top">
+            <label for="age">Your age today</label>
+            <div class="f-val"><input type="text" id="age" value="42" inputmode="numeric"></div>
+          </div>
+          <input type="range" id="age-r" min="25" max="65" step="1" value="42" aria-label="Your age today">
+        </div>
+        <div class="f">
+          <div class="f-top">
+            <label for="spend">You spend a year</label>
+            <div class="f-val"><span class="pre">S$</span><input type="text" class="money w-lg" id="spend" value="90,000" inputmode="numeric"></div>
+          </div>
+          <input type="range" id="spend-r" min="24000" max="300000" step="1000" value="90000" aria-label="Annual spending">
+          <div class="f-hint">Roughly. Take your monthly and multiply by twelve — it does not need to be exact.</div>
+        </div>
+        <div class="f">
+          <div class="f-top">
+            <label for="pot">Invested today</label>
+            <div class="f-val"><span class="pre">S$</span><input type="text" class="money w-lg" id="pot" value="480,000" inputmode="numeric"></div>
+          </div>
+          <input type="range" id="pot-r" min="0" max="3000000" step="10000" value="480000" aria-label="Invested today">
+          <div class="f-hint">Everything working for you — CPF OA/SA, SRS, brokerage. Not your home.</div>
+        </div>
+        <div class="f">
+          <div class="f-top">
+            <label for="save">Saving each month</label>
+            <div class="f-val"><span class="pre">S$</span><input type="text" class="money w-lg" id="save" value="6,500" inputmode="numeric"></div>
+          </div>
+          <input type="range" id="save-r" min="0" max="20000" step="100" value="6500" aria-label="Saving each month">
+        </div>
+      </div>
+
+      <!-- trajectory. Brand green = the pot (gain), clay dashed = the target. -->
+      <div class="traj">
+        <svg id="traj" viewBox="0 0 600 82" preserveAspectRatio="none" aria-hidden="true"></svg>
+        <div class="traj-x"><span>today</span><span id="traj-end">—</span></div>
+      </div>
+
+      <div class="prog">
+        <div class="prog-t"><div class="prog-f" id="prog"></div></div>
+        <div class="prog-l"><span id="prog-l">—</span><span>target <b id="prog-tgt">—</b></span></div>
+      </div>
+
+      <div class="out">
+        <div>
+          <div class="out-l">You reach enough at</div>
+          <div class="out-v" id="out-age">—</div>
+        </div>
+        <div style="text-align:right">
+          <div class="out-l">Your number</div>
+          <div class="out-v num" id="out-num" style="font-size:30px">—</div>
+        </div>
+        <div class="out-s" id="out-sub">—</div>
+      </div>
+      <div class="assump">
+        <b>Assumes</b> 4% real return after inflation and a 4% withdrawal rate (25× spending). Both are contestable — <a href="#" style="color:var(--b-text);text-decoration:underline">we show why we picked them</a>. Illustrative only.
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ social proof — flush under hero ============ -->
+<div class="proof">
+  <div class="wrap proof-in">
+    <div class="proof-i"><div class="k">20,000+</div><div class="v">Singaporeans reading weekly</div></div>
+    <div class="proof-i"><div class="k">14</div><div class="v">Decision tools, all free</div></div>
+    <div class="proof-i"><div class="k">512</div><div class="v">Condo projects scored</div></div>
+    <div class="proof-i"><div class="k">100%</div><div class="v">Workings shown, sources linked</div></div>
+  </div>
+</div>
+
+<!-- ============ tools ============ -->
+<section id="tools">
+  <div class="wrap">
+    <div class="sec-h row">
+      <div>
+        <span class="lbl">Decision tools</span>
+        <h2>Every article ends in a calculator.</h2>
+        <p>Because the answer turns on your CPF balance, your loan, your age and your ABSD band — not on what worked for someone else. Put your numbers in.</p>
+        <div class="chips">
+          <span class="chip">In your 20s</span>
+          <span class="chip">30s</span>
+          <span class="chip on">40s</span>
+          <span class="chip">50s</span>
+          <span class="chip">60s</span>
+        </div>
+      </div>
+      <a class="more" href="#">All 14 tools →</a>
+    </div>
+    <div class="tools">
+      <a class="tool" href="#"><span class="k">CPF</span><span class="n">Top up or invest?</span><span class="d">What the Full Retirement Sum really costs you in flexibility.</span><span class="go">Run it →</span></a>
+      <a class="tool" href="#"><span class="k">SRS</span><span class="n">Relief vs lock-in</span><span class="d">Tax saved today against twenty years frozen.</span><span class="go">Run it →</span></a>
+      <a class="tool" href="#"><span class="k">ETF</span><span class="n">Core &amp; satellite</span><span class="d">Domicile, estate tax and TER, built for an SG resident.</span><span class="go">Run it →</span></a>
+      <a class="tool" href="#"><span class="k">PROPERTY</span><span class="n">Can I afford it?</span><span class="d">TDSR, MSR, LTV and the age-65 loan cliff.</span><span class="go">Run it →</span></a>
+      <a class="tool" href="#"><span class="k">PROPERTY</span><span class="n">Is this price fair?</span><span class="d">Any asking price against its own district's percentile.</span><span class="go">Run it →</span></a>
+      <a class="tool" href="#"><span class="k">INSURANCE</span><span class="n">Cover gap check</span><span class="d">What you hold against what you would actually need.</span><span class="go">Run it →</span></a>
+      <a class="tool" href="#"><span class="k">CASH</span><span class="n">Where to park it</span><span class="d">T-bills, SSB and fixed deposits on today's rates.</span><span class="go">Run it →</span></a>
+      <a class="tool" href="#"><span class="k">LIFE</span><span class="n">Sabbatical cost</span><span class="d">What a year off does to the number, honestly.</span><span class="go">Run it →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ editorial ============ -->
+<section id="reading" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-h row">
+      <div>
+        <span class="lbl">This week</span>
+        <h2>Reading</h2>
+      </div>
+      <a class="more" href="#">Archive →</a>
+    </div>
+
+    <div class="ed">
+      <!-- lead: inherits the default size. Secondaries are the ones demoted. -->
+      <a class="lead" href="#">
+        <div class="lead-img">LEAD IMAGE · 16:9</div>
+        <span class="kicker">Property</span>
+        <h3>We priced every condo in District 19 against its own district. Half of them look expensive.</h3>
+        <p class="standfirst">Turnover, lease decay and price against the district median, across <span class="num">512</span> projects. The scorecard is open — check the one you are viewing this weekend before the agent tells you it is a steal.</p>
+        <div class="meta">9 July · 11 min read · includes the tool</div>
+      </a>
+
+      <div class="sec-list">
+        <a class="sec-item" href="#">
+          <span class="kicker">CPF &amp; Retirement</span>
+          <h4>The Full Retirement Sum went up again. Here is what it does to your plan.</h4>
+          <div class="meta">16 July · 8 min</div>
+        </a>
+        <a class="sec-item" href="#">
+          <span class="kicker">Cash</span>
+          <h4>T-bills, SSB or fixed deposits: where to park cash this quarter</h4>
+          <div class="meta">13 July · 7 min</div>
+        </a>
+        <a class="sec-item" href="#">
+          <span class="kicker">Value Living</span>
+          <h4>Three days a week is not semi-retirement. It is a different job.</h4>
+          <div class="meta">2 July · 6 min</div>
+        </a>
+        <a class="sec-item" href="#">
+          <span class="kicker">Insurance</span>
+          <h4>The policy your agent sold you in 2015, re-examined without the agent</h4>
+          <div class="meta">28 June · 9 min</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- sponsored: hairline sandwich + typographic shift. No tinted box. -->
+    <div class="spon">
+      <div class="spon-lbl">Partner content — paid for and written by <b>[Sponsor name]</b></div>
+      <div class="spon-in">
+        <div class="spon-logo">SPONSOR LOGO</div>
+        <div>
+          <h4>The sponsor's headline sits here, in the sponsor's own words</h4>
+          <p>Two lines of partner copy. Marked by typography and whitespace rather than a coloured box — the label is sans where editorial is serif, the advertiser is named before the headline, and it sits between two hairlines outside the story grid.</p>
+        </div>
+        <button class="btn ghost">Learn more</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ newsletter ============ -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="news">
+      <div>
+        <h2>One email. Every Tuesday.</h2>
+        <p>What changed in Singapore's rules and rates this week, what it does to your numbers, and the one thing worth doing about it. Join <span class="num">20,000+</span> readers.</p>
+      </div>
+      <form class="news-form" onsubmit="return false">
+        <input type="email" placeholder="your@email.com" aria-label="Email address">
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ disclosure + footer ============ -->
+<div class="wrap">
+  <div class="disc">
+    <b>Disclosure.</b> Where you see a partner placement it is labelled, and written by the sponsor rather than by us. It does not change what we cover. Everything here is general information and education only — it is not financial advice, and it takes no account of your objectives, situation or needs. <a href="#" style="color:var(--b-text);text-decoration:underline">Full editorial policy →</a>
+  </div>
+  <div class="foot">
+    <b>Concept mockup — warm variant.</b> Same structure and calculator as the austere version, reskinned to a warm ivory-and-forest-green palette to test the lifestyle direction on its own. Every figure, headline and date is illustrative placeholder content, not a claim. The forest green is a brand identity token, kept distinct from the semantic gain/loss greens in <span class="num">design.md</span>. Domain and TLD are not yet registered.
+  </div>
+</div>
+
+<script>
+/* ---------------------------------------------------------------
+   House numeral rules (design.md): every figure >= 1,000 is grouped,
+   inputs included. A grouped field therefore CANNOT be type="number" —
+   the spec requires a valid floating-point value, so the comma makes it
+   invalid and the browser silently discards it. Hence type="text" +
+   inputmode="numeric", regrouped on blur so the caret does not jump.
+   And +"42,000" is NaN, so every read goes through numOf().
+   --------------------------------------------------------------- */
+const $ = id => document.getElementById(id);
+const fmt = n => Math.round(n).toLocaleString('en-US');
+function numOf(el){ const n = parseFloat(String(el.value).replace(/[^\d.]/g,'')); return isFinite(n) ? n : 0; }
+function groupMoney(el){ const n = numOf(el); el.value = n ? fmt(n) : '0'; }
+
+const REAL_RETURN = 0.04;   // real, after inflation
+const WITHDRAWAL  = 0.04;   // 4% rule -> 25x annual spending
+
+/* Months until the pot reaches 25x spending.
+   FV(n) = P(1+i)^n + PMT * [((1+i)^n - 1) / i],  i = monthly real rate.
+   Solved by stepping rather than logs so the PMT=0 and i=0 cases stay sane. */
+function monthsToTarget(pot, monthlySave, target){
+  const i = Math.pow(1 + REAL_RETURN, 1/12) - 1;
+  if (pot >= target) return 0;
+  if (monthlySave <= 0 && pot * i <= 0) return Infinity;
+  let bal = pot;
+  for (let n = 1; n <= 720; n++){          // cap at 60 years
+    bal = bal * (1 + i) + monthlySave;
+    if (bal >= target) return n;
+  }
+  return Infinity;
+}
+
+/* Balance path, sampled. Same recurrence as monthsToTarget so the picture
+   cannot disagree with the number above it. */
+function balanceAt(pot, pmt, months){
+  const i = Math.pow(1 + REAL_RETURN, 1/12) - 1;
+  const g = Math.pow(1 + i, months);
+  return pot * g + pmt * ((g - 1) / i);
+}
+
+/* preserveAspectRatio="none" stretches x, so strokes carry
+   vector-effect:non-scaling-stroke. No text inside the viewBox, which is why
+   the design.md SVG text-scaling trap does not bite here. */
+function drawTraj(pot, save, target, n){
+  const W = 600, H = 82, pad = 7;
+  const span = isFinite(n) && n > 0 ? n : 720;
+  const yMax = Math.max(target * 1.10, balanceAt(pot, save, span) * 1.02, 1);
+  const X = m => (m / span) * W;
+  const Y = v => H - pad - (v / yMax) * (H - pad * 2);
+
+  let pts = [];
+  for (let s = 0; s <= 60; s++){
+    const m = (s / 60) * span;
+    pts.push([X(m), Y(balanceAt(pot, save, m))]);
+  }
+  const line = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  const area = 'M' + pts[0][0].toFixed(1) + ',' + H + ' ' + line.slice(1) + ' L' + W + ',' + H + ' Z';
+  const ty = Y(target);
+
+  /* var() in an SVG presentation attribute is patchily supported; in a style
+     attribute it is not. Use style. */
+  $('traj').innerHTML =
+      '<path d="' + area + '" style="fill:var(--g-bg2)"/>'
+    + '<path d="' + line + '" style="fill:none;stroke:var(--g);stroke-width:2" vector-effect="non-scaling-stroke"/>'
+    + '<line x1="0" y1="' + ty.toFixed(1) + '" x2="' + W + '" y2="' + ty.toFixed(1)
+    + '" style="stroke:var(--clay);stroke-width:1;stroke-dasharray:4 4" vector-effect="non-scaling-stroke"/>';
+}
+
+function update(){
+  const age    = Math.min(Math.max(parseInt(numOf($('age')), 10) || 0, 18), 75);
+  const spend  = numOf($('spend'));
+  const pot    = numOf($('pot'));
+  const save   = numOf($('save'));
+  const target = spend * (1 / WITHDRAWAL);
+
+  $('out-num').textContent = spend ? 'S$' + fmt(target) : '—';
+  $('prog-tgt').textContent = spend ? 'S$' + fmt(target) : '—';
+
+  if (!spend){
+    $('out-age').textContent = '—';
+    $('out-sub').textContent = 'Set your annual spending to see the number.';
+    $('prog').style.width = '0%'; $('prog-l').textContent = '—';
+    $('traj').innerHTML = ''; $('traj-end').textContent = '—';
+    return;
+  }
+
+  const pct = Math.min(pot / target * 100, 100);
+  $('prog').style.width = pct.toFixed(1) + '%';
+  $('prog-l').innerHTML = '<b>' + pct.toFixed(0) + '%</b> of the way there today';
+
+  const n = monthsToTarget(pot, save, target);
+  drawTraj(pot, save, target, n);
+
+  if (n === 0){
+    $('out-age').textContent = 'Now';
+    $('out-sub').textContent = 'You are already at 25× your spending. The question stopped being money a while ago.';
+    $('traj-end').textContent = 'today';
+    return;
+  }
+  if (!isFinite(n)){
+    $('out-age').textContent = 'Not yet';
+    $('out-sub').textContent = 'On these numbers the pot does not reach S$' + fmt(target) + ' within 60 years. Move one of the sliders.';
+    $('traj-end').textContent = '60y';
+    return;
+  }
+  const yrs = n / 12;
+  $('out-age').textContent = Math.floor(age + yrs);
+  $('out-sub').textContent = Math.floor(yrs) + 'y ' + Math.round((yrs % 1) * 12) + 'm away · you need S$' + fmt(target);
+  $('traj-end').textContent = 'age ' + Math.floor(age + yrs);
+}
+
+/* Two-way binding. Drag to explore, type when you actually know the figure.
+   Dragging is the point: it turns one answer into a relationship — add
+   S$2,000/month and watch 55 become 51. */
+[['age','age-r'],['spend','spend-r'],['pot','pot-r'],['save','save-r']].forEach(([tid, rid]) => {
+  const txt = $(tid), rng = $(rid);
+  rng.addEventListener('input', () => {
+    const v = +rng.value;
+    txt.value = v >= 1000 ? fmt(v) : String(v);   // house rule: group every figure >= 1,000
+    update();
+  });
+  txt.addEventListener('input', () => {
+    const v = numOf(txt);
+    if (v >= +rng.min && v <= +rng.max) rng.value = v;   // out-of-range typing still computes, slider just pins
+    update();
+  });
+  txt.addEventListener('blur', () => {
+    const v = numOf(txt);
+    txt.value = v >= 1000 ? fmt(v) : String(v);
+    update();
+  });
+});
+
+update();   // pre-computed on first paint — the answer exists before any interaction
+</script>
+</body>
+</html>
