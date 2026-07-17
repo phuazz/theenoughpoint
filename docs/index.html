@@ -11,6 +11,9 @@
 <title>Middlegame · Singapore — concept mockup</title>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* ============================================================
+   Tokens — copied verbatim from C:\dev\design.md. Do not fork.
+   ============================================================ */
 :root{
   --bg:#fafaf8; --bg2:#ffffff; --bg3:#f5f5f0; --bg4:#eeeee8; --bg-hover:#f0f0ea;
   --bd:#e2e0d8; --bd2:#d5d3ca; --bd-strong:#c0beb5;
@@ -22,7 +25,6 @@
   --p:#7c3aed; --p-bg:rgba(124,58,237,0.06);
   --c:#0891b2; --c-bg:rgba(8,145,178,0.06);
   --pk:#be185d; --pk-bg:rgba(190,24,93,0.06);
-  /* -text variants per C:\dev\design.md — for TEXT; the values above are for fills, borders, and large type */
   --g-text:#146c43; --r-text:#a93226; --b-text:#1d4ed8; --a-text:#92400e;
   --p-text:#7c3aed; --c-text:#0e7490; --pk-text:#be185d; --t3-text:#66665e;
   --serif:'Instrument Serif',Georgia,serif; --sans:'DM Sans',-apple-system,sans-serif; --mono:'JetBrains Mono','SF Mono','Menlo',monospace;
@@ -31,338 +33,514 @@
   --shadow-md:0 4px 6px rgba(0,0,0,0.05),0 2px 4px rgba(0,0,0,0.04);
   --shadow-lg:0 10px 15px rgba(0,0,0,0.06),0 4px 6px rgba(0,0,0,0.04);
   --radius:8px; --radius-lg:12px;
+
+  /* ---- LANDING scale — NOT in design.md yet. See README "Third scale".
+     design.md defines dashboard (11px labels / 13px body) and document
+     (16px body). A landing page is neither: it persuades. Measured from
+     Linear / Stripe / Ramp / Mercury / FT, July 2026. ---- */
+  --sec-pad:96px;        /* section rhythm. Linear=128, Stripe=96, Ramp=64. Dashboards use ~20. */
+  --display:clamp(40px,5.6vw,66px);
+  --display-lh:1.02;     /* measured modal is 1.0 at 64px; Instrument Serif needs a hair more */
+  --display-ls:-0.022em; /* Linear's Inter value; closest fit to our stack */
+  --lede:19px;
+  --body:17px;           /* consumer fintech sits 17-18, not the 15 dev-tools use */
+  --measure:62ch;        /* prose line length. Linear measures ~66ch. */
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--t1);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--t1);font-family:var(--sans);font-size:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 a{color:inherit;text-decoration:none}
-.shell{max-width:1520px;margin:0 auto;padding:20px 32px 60px}
+.wrap{max-width:1220px;margin:0 auto;padding:0 32px}   /* FT digital grid is 1220 */
 .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
 
-/* ---------- masthead ---------- */
-.masthead{padding:26px 0 20px;border-bottom:2px solid var(--t1);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
-.masthead h1{font-family:var(--serif);font-weight:400;font-size:34px;letter-spacing:-0.5px;line-height:1.05}
-.masthead h1 em{font-style:italic;color:var(--t3)}
-.masthead .sub{font-size:13px;color:var(--t2);margin-top:6px;max-width:640px}
-.pills{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.pill{font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;border:1px solid;display:inline-flex;gap:6px;align-items:center;white-space:nowrap}
-.pill-live{background:var(--g-bg);color:var(--g-text);border-color:var(--g-bg2)}
-.pill-live .dot{width:6px;height:6px;border-radius:50%;background:var(--g)}
-.pill-date{background:var(--bg3);color:var(--t2);border-color:var(--bd)}
+/* machine-facing text is sans; editorial voice is serif. FT's rule. */
+.lbl{font-family:var(--sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--t3-text)}
+
+/* ============================================================
+   Nav
+   ============================================================ */
+.nav{position:sticky;top:0;z-index:50;background:rgba(250,250,248,0.85);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--bd)}
+.nav-in{max-width:1220px;margin:0 auto;padding:0 32px;height:68px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.logo{font-family:var(--serif);font-size:23px;letter-spacing:-0.3px;white-space:nowrap}
+.logo em{font-style:italic;color:var(--t3)}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-size:14px;font-weight:500;color:var(--t2);white-space:nowrap}
+.nav-links a:hover{color:var(--t1)}
+.nav-right{display:flex;gap:10px;align-items:center}
+.pill{font-family:var(--sans);font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;border:1px solid;display:inline-flex;gap:6px;align-items:center;white-space:nowrap}
 .pill-warn{background:var(--a-bg);color:var(--a-text);border-color:rgba(180,83,9,0.2)}
-.btn{font-family:var(--sans);font-size:13px;font-weight:600;padding:9px 16px;border-radius:var(--radius);border:1px solid var(--t1);background:var(--t1);color:#fff;cursor:pointer;min-height:44px;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.btn{font-family:var(--sans);font-size:14px;font-weight:500;padding:0 18px;height:42px;border-radius:var(--radius);border:1px solid var(--t1);background:var(--t1);color:#fff;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:background .15s ease}
 .btn:hover{background:#000}
 .btn.ghost{background:none;color:var(--t1);border-color:var(--bd2)}
-.btn.ghost:hover{background:var(--bg-hover)}
+.btn.ghost:hover{background:var(--bg-hover);border-color:var(--bd-strong)}
+.btn.sm{height:36px;font-size:13px;padding:0 14px}
 
-/* ---------- tabs ---------- */
-.tabs{display:flex;gap:2px;border-bottom:1px solid var(--bd);margin:8px 0 24px;overflow-x:auto;overflow-y:hidden;position:sticky;top:0;z-index:20;background:var(--bg);-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{position:relative;padding:11px 18px;font-size:14px;font-weight:500;color:var(--t2);background:none;border:none;cursor:pointer;white-space:nowrap;min-height:44px;font-family:var(--sans)}
-.tab:hover{color:var(--t1)}
-.tab.active{color:var(--t1);font-weight:600}
-.tab.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--t1)}
+/* ============================================================
+   Hero — full-bleed, not carded. No entrance motion (Linear/Stripe
+   both ship animation-name:none on the h1).
+   ============================================================ */
+.hero{padding:clamp(48px,7vw,104px) 0 clamp(40px,5vw,72px)}
+.hero-in{display:grid;grid-template-columns:1.05fr 0.95fr;gap:64px;align-items:center}
+h1{font-family:var(--serif);font-weight:400;font-size:var(--display);line-height:var(--display-lh);letter-spacing:var(--display-ls)}
+h1 em{font-style:italic;color:var(--t3)}
+.lede{font-size:var(--lede);line-height:1.55;color:var(--t2);margin-top:24px;max-width:var(--measure)}
+.hero-cta{display:flex;gap:12px;margin-top:32px;flex-wrap:wrap}
+.hero-note{font-size:13px;color:var(--t3-text);margin-top:18px}
 
-/* ---------- hero ---------- */
-.hero{display:grid;grid-template-columns:1.35fr 1fr;gap:32px;align-items:center;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:38px 40px;margin-bottom:26px}
-.hero h2{font-family:var(--serif);font-weight:400;font-size:clamp(32px,4vw,50px);line-height:1.06;letter-spacing:-1px}
-.hero h2 em{font-style:italic;color:var(--t3)}
-.hero .lede{font-size:16px;line-height:1.65;color:var(--t2);margin-top:16px;max-width:56ch}
-.hero-cta{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
-.hero-side{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:20px 22px}
-.hero-side .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:var(--t3-text);margin-bottom:14px}
-.claim{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--bd)}
-.claim:last-child{border-bottom:none;padding-bottom:0}
-.claim-k{font-size:14px;font-weight:600}
-.claim-v{font-size:13px;color:var(--t2);margin-top:2px;line-height:1.5}
-.tick{flex:none;width:18px;height:18px;border-radius:50%;background:var(--b-bg2);color:var(--b-text);font-size:11px;font-weight:700;display:grid;place-items:center;margin-top:2px}
+/* ---- the calculator: the tool IS the product, so it leads.
+   Wise pattern — pre-computed on load, no empty state, no submit. ---- */
+.calc{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);box-shadow:var(--shadow-md);overflow:hidden}
+.calc-head{padding:16px 24px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--bg3)}
+.calc-body{padding:24px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--t2);margin-bottom:6px}
+.input-w{position:relative;display:flex;align-items:center}
+.input-w .pre{position:absolute;left:14px;font-family:var(--mono);font-size:15px;color:var(--t3-text);pointer-events:none}
+.field input{width:100%;height:52px;font-family:var(--mono);font-size:17px;font-weight:500;color:var(--t1);background:var(--bg);border:1px solid var(--bd2);border-radius:var(--radius);padding:0 14px;transition:border-color .12s ease,box-shadow .12s ease}
+.field input.money{padding-left:30px}
+.field input:focus{outline:none;border-color:var(--b);box-shadow:0 0 0 3px var(--b-bg2)}
+.field .hint{font-size:11px;color:var(--t3-text);margin-top:5px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
-/* ---------- topic tiles ---------- */
-.sec-head{display:flex;justify-content:space-between;align-items:baseline;margin:30px 0 12px}
-.sec-head h3{font-size:12px;text-transform:uppercase;letter-spacing:0.8px;font-weight:700;color:var(--t2)}
-.sec-head a{font-size:12px;color:var(--b-text);font-weight:500}
-.tiles{display:grid;grid-template-columns:repeat(8,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);border-radius:var(--radius-lg);overflow:hidden}
-.tile{background:var(--bg2);padding:16px 14px 14px;display:flex;flex-direction:column;gap:6px;min-width:0;cursor:pointer}
-.tile:hover{background:var(--bg-hover)}
-.tile-k{font-size:10px;font-family:var(--mono);font-weight:700;letter-spacing:0.5px;color:var(--t3-text)}
-.tile-n{font-size:14px;font-weight:600;letter-spacing:-0.2px}
-.tile-d{font-size:12px;color:var(--t2);line-height:1.45;flex:1}
-.tile-s{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--b-text)}
+.out{background:var(--t1);color:#fff;padding:22px 24px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.out-l{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#b0b0a8}
+.out-v{font-family:var(--serif);font-size:46px;line-height:1;letter-spacing:-1px}
+.out-s{font-family:var(--mono);font-size:12px;color:#b0b0a8;margin-top:8px;width:100%}
+.assump{padding:12px 24px;background:var(--bg3);border-top:1px solid var(--bd);font-size:11px;color:var(--t3-text);line-height:1.5}
 
-/* ---------- 3-col body ---------- */
-.grid3{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:18px;margin-top:22px;align-items:start}
-.card{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:18px 20px;min-width:0}
-.card h3{font-size:12px;text-transform:uppercase;letter-spacing:0.8px;font-weight:700;color:var(--t2);margin-bottom:14px;display:flex;justify-content:space-between;align-items:baseline}
-.card h3 a{font-size:12px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--b-text)}
+/* ============================================================
+   Social proof — flush under hero, never inside it. Ramp/Stripe/Mercury.
+   ============================================================ */
+.proof{border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);background:var(--bg3)}
+.proof-in{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;padding:28px 0}
+.proof-i .k{font-family:var(--mono);font-size:26px;font-weight:600;letter-spacing:-0.5px}
+.proof-i .v{font-size:13px;color:var(--t2);margin-top:2px}
 
-.art{display:grid;grid-template-columns:104px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--bd)}
-.art:first-of-type{padding-top:0}
-.art:last-of-type{border-bottom:none;padding-bottom:0}
-.art-img{background:var(--bg4);border:1px solid var(--bd);border-radius:var(--radius);height:76px;display:grid;place-items:center;font-size:9px;font-family:var(--mono);color:var(--t3-text);letter-spacing:0.5px}
-.art-cat{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;font-weight:700;color:var(--c-text)}
-.art-t{font-size:16px;font-weight:600;line-height:1.35;margin:5px 0 4px;letter-spacing:-0.2px}
-.art:hover .art-t{color:var(--b-text)}
-.art-d{font-size:13px;color:var(--t2);line-height:1.55}
-.art-m{font-size:11px;font-family:var(--mono);color:var(--t3-text);margin-top:7px}
+/* ============================================================
+   Sections
+   ============================================================ */
+section{padding:var(--sec-pad) 0}
+.sec-h{margin-bottom:44px;max-width:var(--measure)}
+.sec-h h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,3.4vw,42px);line-height:1.1;letter-spacing:-0.5px;margin-top:12px}
+.sec-h p{font-size:var(--body);color:var(--t2);margin-top:14px}
+.sec-h.row{max-width:none;display:flex;justify-content:space-between;align-items:flex-end;gap:24px}
+.more{font-size:14px;font-weight:500;color:var(--b-text);white-space:nowrap}
+.more:hover{text-decoration:underline}
 
-/* ---------- monetisation slots ---------- */
-.slot-lbl{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;padding:3px 8px;border-radius:4px;display:inline-block}
-.slot-spon{background:var(--a-bg);color:var(--a-text);border:1px solid rgba(180,83,9,0.2)}
-.slot-aff{background:var(--p-bg);color:var(--p-text);border:1px solid rgba(124,58,237,0.2)}
-.spon-box{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:16px;margin-top:12px}
-.spon-logo{height:64px;background:var(--bg4);border:1px dashed var(--bd2);border-radius:var(--radius);display:grid;place-items:center;font-family:var(--mono);font-size:10px;color:var(--t3-text);margin-bottom:12px}
-.spon-t{font-size:15px;font-weight:600;letter-spacing:-0.2px}
-.spon-d{font-size:12px;color:var(--t2);line-height:1.5;margin:6px 0 12px}
-.spon-foot{font-size:10px;font-family:var(--mono);color:var(--t3-text);margin-top:10px}
+/* ---- tools = product surface, so cards are correct here ---- */
+.tools{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.tool{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);padding:24px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow-sm);transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+.tool:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:var(--bd2)}
+.tool .k{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:1px;color:var(--t3-text)}
+.tool .n{font-family:var(--serif);font-size:24px;line-height:1.15;letter-spacing:-0.3px;margin-top:2px}
+.tool .d{font-size:14px;color:var(--t2);line-height:1.5;flex:1}
+.tool .go{font-size:13px;font-weight:600;color:var(--b-text);margin-top:6px}
 
-.aff{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--bd)}
-.aff:last-of-type{border-bottom:none}
-.aff-n{font-size:13px;font-weight:600}
-.aff-d{font-size:11px;color:var(--t2);line-height:1.4;margin-top:2px}
-.aff-r{font-family:var(--mono);font-size:11px;color:var(--a-text);margin-top:3px;letter-spacing:0.5px}
-.aff-b{font-size:11px;font-weight:600;padding:6px 11px;border:1px solid var(--bd2);border-radius:var(--radius);background:var(--bg2);white-space:nowrap;cursor:pointer;min-height:32px}
-.aff-b:hover{background:var(--bg-hover);border-color:var(--t1)}
+/* ---- editorial = rules, never cards. FT/NYT/Economist are unanimous;
+   the Economist explicitly ships box-shadow:none. ---- */
+.ed{display:grid;grid-template-columns:1.55fr 1fr;gap:56px;align-items:start}
+.kicker{font-family:var(--sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--c-text)}
+.lead-img{aspect-ratio:16/9;background:var(--bg4);border:1px solid var(--bd);border-radius:var(--radius);display:grid;place-items:center;font-family:var(--mono);font-size:11px;color:var(--t3-text);letter-spacing:1px;margin-bottom:20px}
+.lead h3{font-family:var(--serif);font-weight:400;font-size:40px;line-height:1.1;letter-spacing:-0.5px;margin:10px 0 12px}   /* 40 : 20 = the 2.0x broadsheet ratio */
+.lead:hover h3{color:var(--b-text)}
+.standfirst{font-size:var(--body);color:var(--t2);line-height:1.6;max-width:58ch}
+.meta{font-family:var(--sans);font-size:12px;color:var(--t3-text);margin-top:14px}
 
-.pop{counter-reset:p;list-style:none}
-.pop li{counter-increment:p;display:grid;grid-template-columns:auto 1fr;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd);font-size:13px;line-height:1.45}
-.pop li:last-child{border-bottom:none}
-.pop li::before{content:counter(p);font-family:var(--mono);font-size:11px;font-weight:700;color:var(--t3-text)}
-.pop li:hover{color:var(--b-text)}
+/* secondaries are DEMOTED — the lead just inherits. FT's own mechanism:
+   drift-proof, because a new story defaults to prominent. */
+.sec-list{border-top:1px solid var(--bd)}
+.sec-item{display:block;padding:22px 0;border-bottom:1px solid var(--bd)}
+.sec-item h4{font-family:var(--serif);font-weight:400;font-size:20px;line-height:1.25;letter-spacing:-0.2px;margin:8px 0 0}
+.sec-item:hover h4{color:var(--b-text)}
+.sec-item .meta{margin-top:10px}
 
-/* ---------- newsletter + disclosure ---------- */
-.foot-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:18px;margin-top:22px}
-.disc{background:var(--a-bg);border:1px solid rgba(180,83,9,0.2);border-radius:var(--radius-lg);padding:16px 18px;font-size:12px;color:var(--t2);line-height:1.6}
-.disc b{color:var(--a-text)}
-.news{background:var(--t1);color:#fff;border-radius:var(--radius-lg);padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
-.news h4{font-family:var(--serif);font-weight:400;font-size:24px;letter-spacing:-0.3px}
-.news p{font-size:12px;color:#b0b0a8;margin-top:4px}
-.news-form{display:flex;gap:8px}
-.news-form input{font-family:var(--sans);font-size:13px;padding:10px 12px;border:1px solid #3a3a36;background:#262622;color:#fff;border-radius:var(--radius);min-width:200px;min-height:44px}
+/* ---- sponsored: whitespace + a typographic shift, at most a hairline.
+   NOT a tinted box — that is the cheap tell. FT sandwiches between two
+   hairlines; NYT uses pure whitespace. Label is sans, above, own line.
+   The lowercase+small-caps trick is the Economist's. ---- */
+.spon{border-top:1px solid var(--bd2);border-bottom:1px solid var(--bd2);padding:32px 0;margin:var(--sec-pad) 0 0}
+.spon-lbl{font-family:var(--sans);font-size:15px;font-weight:400;text-transform:lowercase;font-variant:small-caps;letter-spacing:0.06em;color:var(--t2)}
+.spon-lbl b{font-weight:600;color:var(--t1)}
+.spon-in{display:grid;grid-template-columns:200px 1fr auto;gap:32px;align-items:center;margin-top:18px}
+.spon-logo{height:88px;background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);display:grid;place-items:center;font-family:var(--mono);font-size:10px;color:var(--t3-text);letter-spacing:1px}
+.spon-in h4{font-family:var(--serif);font-weight:400;font-size:26px;line-height:1.2;letter-spacing:-0.3px}
+.spon-in p{font-size:15px;color:var(--t2);margin-top:8px;max-width:56ch}
+
+/* ---- affiliate table ---- */
+.aff-tbl{width:100%;border-collapse:collapse;margin-top:8px}
+.aff-tbl th{font-family:var(--sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--t3-text);text-align:left;padding:0 16px 12px 0;border-bottom:2px solid var(--t1)}
+.aff-tbl th:last-child,.aff-tbl td:last-child{text-align:right;padding-right:0}
+.aff-tbl td{padding:20px 16px 20px 0;border-bottom:1px solid var(--bd);vertical-align:middle}
+.aff-tbl tr:hover td{background:var(--bg-hover)}
+.aff-n{font-size:16px;font-weight:600}
+.aff-d{font-size:13px;color:var(--t2);margin-top:2px}
+.aff-note{font-size:13px;color:var(--t2);margin-top:20px;max-width:var(--measure)}
+
+/* ---- newsletter ---- */
+.news{background:var(--t1);color:#fff;border-radius:var(--radius-lg);padding:56px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center}
+.news h2{font-family:var(--serif);font-weight:400;font-size:40px;line-height:1.1;letter-spacing:-0.5px}
+.news p{font-size:15px;color:#b0b0a8;margin-top:12px;max-width:46ch;line-height:1.6}
+.news-form{display:flex;gap:10px}
+.news-form input{font-family:var(--sans);font-size:15px;padding:0 16px;height:52px;border:1px solid #3a3a36;background:#262622;color:#fff;border-radius:var(--radius);min-width:260px}
 .news-form input::placeholder{color:var(--t3)}
-.news-form button{font-family:var(--sans);font-size:13px;font-weight:600;padding:10px 18px;border:none;border-radius:var(--radius);background:#fff;color:var(--t1);cursor:pointer;min-height:44px}
-.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--bd);font-size:12px;color:var(--t3-text);line-height:1.6;max-width:1040px}
+.news-form input:focus{outline:none;border-color:#6a6a62}
+.news-form button{font-family:var(--sans);font-size:15px;font-weight:600;padding:0 24px;height:52px;border:none;border-radius:var(--radius);background:#fff;color:var(--t1);cursor:pointer;white-space:nowrap}
+.news-form button:hover{background:#eeeee8}
 
-@media(max-width:1200px){
-  .tiles{grid-template-columns:repeat(4,1fr)}
-  .grid3{grid-template-columns:1fr 1fr}
-  .grid3 .card:first-child{grid-column:1/-1}
+/* ---- footer ---- */
+.disc{border-top:1px solid var(--bd);padding:32px 0;font-size:13px;color:var(--t2);line-height:1.65;max-width:var(--measure)}
+.disc b{color:var(--t1)}
+.foot{border-top:1px solid var(--bd);padding:32px 0 64px;font-size:12px;color:var(--t3-text);line-height:1.65}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media(max-width:1080px){
+  :root{--sec-pad:72px}
+  .tools{grid-template-columns:repeat(2,1fr)}
+  .ed{grid-template-columns:1fr;gap:44px}
+  .lead h3{font-size:34px}
+  .nav-links{display:none}
 }
-@media(max-width:768px){
-  .shell{padding:16px 18px 48px}
-  .hero{grid-template-columns:1fr;padding:26px 22px;gap:24px}
-  .grid3,.foot-grid{grid-template-columns:1fr}
-  .tiles{grid-template-columns:repeat(2,1fr)}
-  .masthead h1{font-size:28px}
-  .news{flex-direction:column;align-items:flex-start}
+@media(max-width:860px){
+  .hero-in{grid-template-columns:1fr;gap:44px}
+  .proof-in{grid-template-columns:repeat(2,1fr);gap:24px}
+  .spon-in{grid-template-columns:1fr;gap:20px}
+  .news{grid-template-columns:1fr;padding:36px;gap:28px}
   .news-form{width:100%}
   .news-form input{flex:1;min-width:0}
 }
-@media(max-width:480px){
-  .art{grid-template-columns:1fr}
-  .art-img{height:130px}
+@media(max-width:560px){
+  :root{--sec-pad:56px;--body:16px;--lede:17px}
+  .wrap,.nav-in{padding:0 18px}
+  .tools{grid-template-columns:1fr}
+  .row2{grid-template-columns:1fr}
+  .out-v{font-size:38px}
+  .news{padding:26px}
+  .news-form{flex-direction:column}
+  .aff-tbl th:nth-child(2),.aff-tbl td:nth-child(2){display:none}
 }
 /* touch: 44px minimum tap target per design.md */
 @media(pointer:coarse){
-  .aff-b{min-height:44px;padding:0 14px}
+  .btn.sm{height:44px}
+  .aff-tbl .btn{height:44px}
+}
+/* the top tier ships no entrance motion on hero type; honour the preference anyway */
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }
 </style>
 </head>
 <body>
-<div class="shell">
 
-  <!-- ============ masthead ============ -->
-  <header class="masthead">
-    <div>
-      <h1 id="brand">Middlegame · <em>Singapore</em></h1>
-      <div class="sub">Work less. Invest better. Spend with intention. Decision tools and honest numbers for Singaporeans in the middle of it.</div>
+<!-- ============ nav ============ -->
+<nav class="nav">
+  <div class="nav-in">
+    <a class="logo" href="#" id="brand">Middlegame<em>.sg</em></a>
+    <div class="nav-links">
+      <a href="#tools">Tools</a>
+      <a href="#reading">Reading</a>
+      <a href="#brokers">Brokers</a>
+      <a href="#">Value living</a>
+      <a href="#">About</a>
     </div>
-    <div class="pills">
-      <span class="pill pill-warn">MOCKUP · illustrative figures</span>
-      <span class="pill pill-date">every Tuesday</span>
-      <button class="btn">✉ Subscribe</button>
+    <div class="nav-right">
+      <span class="pill pill-warn">MOCKUP</span>
+      <button class="btn sm">Subscribe</button>
     </div>
-  </header>
+  </div>
+</nav>
 
-  <!-- ============ nav ============ -->
-  <nav class="tabs">
-    <button class="tab active">Home</button>
-    <button class="tab">Freedom Roadmap</button>
-    <button class="tab">Money Tools &amp; Reviews</button>
-    <button class="tab">Business Experiments</button>
-    <button class="tab">Value Living</button>
-    <button class="tab">About</button>
-  </nav>
-
-  <!-- ============ hero ============ -->
-  <section class="hero">
+<!-- ============ hero ============ -->
+<header class="hero">
+  <div class="wrap hero-in">
     <div>
-      <h2>The decisions that set up your <em>second half</em> get made now.</h2>
-      <p class="lede">Property, portfolio, insurance, and whether you can afford to stop. Real numbers run against Singapore rules — CPF, SRS, TDSR, ABSD, LTV — not American blog advice with the serial numbers filed off.</p>
+      <h1>The decisions that set up your <em>second half</em> get made now.</h1>
+      <p class="lede">Property, portfolio, insurance, and whether you can afford to stop. Real numbers, run against Singapore rules — CPF, SRS, TDSR, ABSD — not American blog advice with the serial numbers filed off.</p>
       <div class="hero-cta">
-        <button class="btn">Start with the roadmap →</button>
-        <button class="btn ghost">Open the calculators</button>
+        <a class="btn" href="#tools">Browse the tools</a>
+        <a class="btn ghost" href="#reading">Read this week</a>
+      </div>
+      <p class="hero-note">Free. No account. Every calculator shows its workings.</p>
+    </div>
+
+    <!-- the tool leads: pre-computed on load, no empty state, no submit button -->
+    <div class="calc">
+      <div class="calc-head">
+        <span class="lbl">The enough point</span>
+        <span class="lbl" style="color:var(--b-text)">Live →</span>
+      </div>
+      <div class="calc-body">
+        <div class="row2">
+          <div class="field">
+            <label for="age">Your age today</label>
+            <input type="number" id="age" value="42" min="18" max="70" inputmode="numeric">
+          </div>
+          <div class="field">
+            <label for="spend">Annual spending</label>
+            <div class="input-w"><span class="pre">S$</span>
+              <input type="text" class="money" id="spend" value="90,000" inputmode="numeric">
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="pot">Invested today</label>
+          <div class="input-w"><span class="pre">S$</span>
+            <input type="text" class="money" id="pot" value="480,000" inputmode="numeric">
+          </div>
+          <div class="hint">Everything working for you — CPF OA/SA, SRS, brokerage. Not your home.</div>
+        </div>
+        <div class="field" style="margin-bottom:0">
+          <label for="save">Saving each month</label>
+          <div class="input-w"><span class="pre">S$</span>
+            <input type="text" class="money" id="save" value="6,500" inputmode="numeric">
+          </div>
+        </div>
+      </div>
+      <div class="out">
+        <div>
+          <div class="out-l">You reach enough at</div>
+          <div class="out-v" id="out-age">—</div>
+        </div>
+        <div style="text-align:right">
+          <div class="out-l">Your number</div>
+          <div class="out-v num" id="out-num" style="font-size:30px">—</div>
+        </div>
+        <div class="out-s" id="out-sub">—</div>
+      </div>
+      <div class="assump">
+        <b>Assumes</b> 4% real return after inflation and a 4% withdrawal rate (25× spending). Both are contestable — <a href="#" style="color:var(--b-text);text-decoration:underline">we show why we picked them</a>. Illustrative only.
       </div>
     </div>
-    <div class="hero-side">
-      <div class="lbl">What this is</div>
-      <div class="claim"><span class="tick">✓</span><div><div class="claim-k">Tools, not takes</div><div class="claim-v">Every article ends in a calculator you can put your own numbers into.</div></div></div>
-      <div class="claim"><span class="tick">✓</span><div><div class="claim-k">Singapore-specific</div><div class="claim-v">Rules encoded from MAS, IRAS, CPF and URA. Updated when they change.</div></div></div>
-      <div class="claim"><span class="tick">✓</span><div><div class="claim-k">Methodology shown</div><div class="claim-v">Assumptions stated, sources linked, workings open.</div></div></div>
-      <div class="claim"><span class="tick">✓</span><div><div class="claim-k">Two friends, mid-forties</div><div class="claim-v">One runs money for a living. One left to build things. Both still deciding.</div></div></div>
-    </div>
-  </section>
-
-  <!-- ============ topic tiles ============ -->
-  <div class="sec-head"><h3>Decision tools</h3><a href="#">All tools →</a></div>
-  <div class="tiles">
-    <div class="tile"><div class="tile-k">CPF</div><div class="tile-n">Top up or invest?</div><div class="tile-d">What the FRS actually costs you in flexibility.</div><div class="tile-s">Run it →</div></div>
-    <div class="tile"><div class="tile-k">SRS</div><div class="tile-n">Relief vs lock-in</div><div class="tile-d">Tax saved today against 20 years frozen.</div><div class="tile-s">Run it →</div></div>
-    <div class="tile"><div class="tile-k">ETF</div><div class="tile-n">Core &amp; satellite</div><div class="tile-d">Irish UCITS, domicile, estate tax, TER.</div><div class="tile-s">Run it →</div></div>
-    <div class="tile"><div class="tile-k">PROP</div><div class="tile-n">Can I afford it?</div><div class="tile-d">TDSR, MSR, LTV and the age-65 cliff.</div><div class="tile-s">Run it →</div></div>
-    <div class="tile"><div class="tile-k">PROP</div><div class="tile-n">Is this price fair?</div><div class="tile-d">Asking price against district percentile.</div><div class="tile-s">Run it →</div></div>
-    <div class="tile"><div class="tile-k">FIRE</div><div class="tile-n">The enough point</div><div class="tile-d">The number, and the year you reach it.</div><div class="tile-s">Run it →</div></div>
-    <div class="tile"><div class="tile-k">INS</div><div class="tile-n">Cover gap check</div><div class="tile-d">What you hold versus what you need.</div><div class="tile-s">Run it →</div></div>
-    <div class="tile"><div class="tile-k">LIFE</div><div class="tile-n">Sabbatical cost</div><div class="tile-d">What a year off does to the number.</div><div class="tile-s">Run it →</div></div>
   </div>
+</header>
 
-  <!-- ============ body ============ -->
-  <div class="grid3">
-
-    <!-- latest -->
-    <div class="card">
-      <h3>Latest <a href="#">View all →</a></h3>
-
-      <a class="art" href="#">
-        <div class="art-img">IMAGE 4:3</div>
-        <div>
-          <div class="art-cat">CPF &amp; Retirement</div>
-          <div class="art-t">The Full Retirement Sum went up again. Here is what it does to your plan.</div>
-          <div class="art-d">The FRS rises roughly <span class="num">3.5%</span> a year. We ran a <span class="num">42</span>-year-old's numbers forward to <span class="num">2,045</span> and the gap is not where most people think.</div>
-          <div class="art-m">16 May · 8 min · with calculator</div>
-        </div>
-      </a>
-
-      <a class="art" href="#">
-        <div class="art-img">IMAGE 4:3</div>
-        <div>
-          <div class="art-cat">Cash</div>
-          <div class="art-t">T-bills vs SSB vs fixed deposits: where to park cash right now</div>
-          <div class="art-d">Six-month T-bill cut-off is <span class="num">2.68%</span>. SSB 10-year average is <span class="num">2.41%</span>. The right answer depends on when you need it back, not the headline.</div>
-          <div class="art-m">13 May · 7 min · updated weekly</div>
-        </div>
-      </a>
-
-      <a class="art" href="#">
-        <div class="art-img">IMAGE 4:3</div>
-        <div>
-          <div class="art-cat">Property</div>
-          <div class="art-t">We priced every condo in District 19 against its own district. Half look expensive.</div>
-          <div class="art-d">Turnover, lease decay and price versus district median across <span class="num">512</span> projects. The scorecard is open — check yours before you view.</div>
-          <div class="art-m">9 May · 11 min · with tool</div>
-        </div>
-      </a>
-
-      <a class="art" href="#">
-        <div class="art-img">IMAGE 4:3</div>
-        <div>
-          <div class="art-cat">Value Living</div>
-          <div class="art-t">Three days a week is not semi-retirement. It is a different job.</div>
-          <div class="art-d">What actually changed when income dropped <span class="num">40%</span> and time went up — and the four things that were harder than the money.</div>
-          <div class="art-m">2 May · 6 min</div>
-        </div>
-      </a>
-    </div>
-
-    <!-- sponsored + popular -->
-    <div>
-      <div class="card">
-        <h3>Sponsored</h3>
-        <span class="slot-lbl slot-spon">Paid placement</span>
-        <div class="spon-box">
-          <div class="spon-logo">SPONSOR LOGO</div>
-          <div class="spon-t">Partner headline sits here</div>
-          <div class="spon-d">Two lines of sponsor copy, written by the sponsor, reviewed against the editorial policy. Visually distinct from editorial by design — tinted surface, amber label, dashed logo frame.</div>
-          <button class="btn ghost" style="width:100%;justify-content:center">Learn more</button>
-          <div class="spon-foot">Paid placement · does not affect rankings</div>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:18px">
-        <h3>Popular this week</h3>
-        <ol class="pop">
-          <li>How we got to FI at <span class="num">39</span> on a <span class="num">$7,000</span> monthly income</li>
-          <li>SRS for property or ETFs — the honest comparison</li>
-          <li>HDB or condo: which actually builds more wealth?</li>
-          <li>Our <span class="num">2,026</span> portfolio update — CPF, SRS, ETFs, REITs</li>
-          <li>Seven side incomes that work in Singapore (and four that do not)</li>
-        </ol>
-      </div>
-    </div>
-
-    <!-- affiliate -->
-    <div class="card">
-      <h3>Broker comparison</h3>
-      <span class="slot-lbl slot-aff">Affiliate links</span>
-      <div style="font-size:12px;color:var(--t2);line-height:1.55;margin:12px 0 4px">
-        Ranked on published fees and market access, not on commission. Methodology is linked at the bottom of every table.
-      </div>
-      <div class="aff">
-        <div>
-          <div class="aff-n">Broker A</div>
-          <div class="aff-d">Lowest fees for SGX, US and LSE</div>
-          <div class="aff-r">★★★★☆ <span style="color:var(--t3-text)">4.4</span></div>
-        </div>
-        <button class="aff-b">Compare</button>
-      </div>
-      <div class="aff">
-        <div>
-          <div class="aff-n">Broker B</div>
-          <div class="aff-d">Free US stocks, terms apply</div>
-          <div class="aff-r">★★★★☆ <span style="color:var(--t3-text)">4.1</span></div>
-        </div>
-        <button class="aff-b">Compare</button>
-      </div>
-      <div class="aff">
-        <div>
-          <div class="aff-n">Broker C</div>
-          <div class="aff-d">Wide global access, CPF/SRS support</div>
-          <div class="aff-r">★★★☆☆ <span style="color:var(--t3-text)">3.8</span></div>
-        </div>
-        <button class="aff-b">Compare</button>
-      </div>
-      <div style="margin-top:14px"><a href="#" style="font-size:12px;color:var(--b-text);font-weight:500">See full comparison &amp; methodology →</a></div>
-    </div>
-
+<!-- ============ social proof — flush under hero ============ -->
+<div class="proof">
+  <div class="wrap proof-in">
+    <div class="proof-i"><div class="k">20,000+</div><div class="v">Singaporeans reading weekly</div></div>
+    <div class="proof-i"><div class="k">14</div><div class="v">Decision tools, all free</div></div>
+    <div class="proof-i"><div class="k">512</div><div class="v">Condo projects scored</div></div>
+    <div class="proof-i"><div class="k">100%</div><div class="v">Workings shown, sources linked</div></div>
   </div>
+</div>
 
-  <!-- ============ newsletter + disclosure ============ -->
-  <div class="foot-grid">
-    <div class="disc">
-      <b>Disclosure.</b> Some links on this site are affiliate links, and we may earn a commission at no additional cost to you. Sponsored placements are labelled as such and are written by the sponsor. Neither affects how products are ranked or reviewed. Everything here is general information and education only — it is not financial advice, and it does not take your objectives, situation or needs into account. <a href="#" style="color:var(--a-text);font-weight:600;text-decoration:underline">Full policy →</a>
+<!-- ============ tools ============ -->
+<section id="tools">
+  <div class="wrap">
+    <div class="sec-h row">
+      <div>
+        <span class="lbl">Decision tools</span>
+        <h2>Every article ends in a calculator.</h2>
+        <p>Because an opinion about your money is worth less than your own numbers. Put yours in.</p>
+      </div>
+      <a class="more" href="#">All 14 tools →</a>
     </div>
+    <div class="tools">
+      <a class="tool" href="#"><span class="k">CPF</span><span class="n">Top up or invest?</span><span class="d">What the Full Retirement Sum really costs you in flexibility.</span><span class="go">Run it →</span></a>
+      <a class="tool" href="#"><span class="k">SRS</span><span class="n">Relief vs lock-in</span><span class="d">Tax saved today against twenty years frozen.</span><span class="go">Run it →</span></a>
+      <a class="tool" href="#"><span class="k">ETF</span><span class="n">Core &amp; satellite</span><span class="d">Domicile, estate tax and TER, built for an SG resident.</span><span class="go">Run it →</span></a>
+      <a class="tool" href="#"><span class="k">PROPERTY</span><span class="n">Can I afford it?</span><span class="d">TDSR, MSR, LTV and the age-65 loan cliff.</span><span class="go">Run it →</span></a>
+      <a class="tool" href="#"><span class="k">PROPERTY</span><span class="n">Is this price fair?</span><span class="d">Any asking price against its own district's percentile.</span><span class="go">Run it →</span></a>
+      <a class="tool" href="#"><span class="k">INSURANCE</span><span class="n">Cover gap check</span><span class="d">What you hold against what you would actually need.</span><span class="go">Run it →</span></a>
+      <a class="tool" href="#"><span class="k">CASH</span><span class="n">Where to park it</span><span class="d">T-bills, SSB and fixed deposits on today's rates.</span><span class="go">Run it →</span></a>
+      <a class="tool" href="#"><span class="k">LIFE</span><span class="n">Sabbatical cost</span><span class="d">What a year off does to the number, honestly.</span><span class="go">Run it →</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ editorial ============ -->
+<section id="reading" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-h row">
+      <div>
+        <span class="lbl">This week</span>
+        <h2>Reading</h2>
+      </div>
+      <a class="more" href="#">Archive →</a>
+    </div>
+
+    <div class="ed">
+      <!-- lead: inherits the default size. Secondaries are the ones demoted. -->
+      <a class="lead" href="#">
+        <div class="lead-img">LEAD IMAGE · 16:9</div>
+        <span class="kicker">Property</span>
+        <h3>We priced every condo in District 19 against its own district. Half of them look expensive.</h3>
+        <p class="standfirst">Turnover, lease decay and price against the district median, across <span class="num">512</span> projects. The scorecard is open — check the one you are viewing this weekend before the agent tells you it is a steal.</p>
+        <div class="meta">9 July · 11 min read · includes the tool</div>
+      </a>
+
+      <div class="sec-list">
+        <a class="sec-item" href="#">
+          <span class="kicker">CPF &amp; Retirement</span>
+          <h4>The Full Retirement Sum went up again. Here is what it does to your plan.</h4>
+          <div class="meta">16 July · 8 min</div>
+        </a>
+        <a class="sec-item" href="#">
+          <span class="kicker">Cash</span>
+          <h4>T-bills, SSB or fixed deposits: where to park cash this quarter</h4>
+          <div class="meta">13 July · 7 min</div>
+        </a>
+        <a class="sec-item" href="#">
+          <span class="kicker">Value Living</span>
+          <h4>Three days a week is not semi-retirement. It is a different job.</h4>
+          <div class="meta">2 July · 6 min</div>
+        </a>
+        <a class="sec-item" href="#">
+          <span class="kicker">Insurance</span>
+          <h4>The policy your agent sold you in 2015, re-examined without the agent</h4>
+          <div class="meta">28 June · 9 min</div>
+        </a>
+      </div>
+    </div>
+
+    <!-- sponsored: hairline sandwich + typographic shift. No tinted box. -->
+    <div class="spon">
+      <div class="spon-lbl">Partner content — paid for and written by <b>[Sponsor name]</b></div>
+      <div class="spon-in">
+        <div class="spon-logo">SPONSOR LOGO</div>
+        <div>
+          <h4>The sponsor's headline sits here, in the sponsor's own words</h4>
+          <p>Two lines of partner copy. Marked by typography and whitespace rather than a coloured box — the label is sans where editorial is serif, the advertiser is named before the headline, and it sits between two hairlines outside the story grid.</p>
+        </div>
+        <button class="btn ghost">Learn more</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ brokers / affiliate ============ -->
+<section id="brokers">
+  <div class="wrap">
+    <div class="sec-h">
+      <span class="lbl">Comparison · contains affiliate links</span>
+      <h2>Brokers, ranked on published fees.</h2>
+      <p>Not on what they pay us. The ranking rule is fixed before any commercial conversation, and the methodology is linked below.</p>
+    </div>
+    <table class="aff-tbl">
+      <thead><tr><th>Broker</th><th>Best for</th><th>SGX / US fee</th><th></th></tr></thead>
+      <tbody>
+        <tr>
+          <td><div class="aff-n">Broker A</div><div class="aff-d">Lowest all-in for SGX, US and LSE</div></td>
+          <td style="font-size:14px;color:var(--t2)">Multi-market investors</td>
+          <td class="num" style="font-size:14px">0.08% / US$1.00</td>
+          <td><button class="btn ghost sm">Compare</button></td>
+        </tr>
+        <tr>
+          <td><div class="aff-n">Broker B</div><div class="aff-d">Free US stock trades, conditions apply</div></td>
+          <td style="font-size:14px;color:var(--t2)">US-only, smaller sums</td>
+          <td class="num" style="font-size:14px">0.08% / US$0.00</td>
+          <td><button class="btn ghost sm">Compare</button></td>
+        </tr>
+        <tr>
+          <td><div class="aff-n">Broker C</div><div class="aff-d">Widest access, CPF and SRS supported</div></td>
+          <td style="font-size:14px;color:var(--t2)">CPF/SRS investing</td>
+          <td class="num" style="font-size:14px">0.12% / US$2.50</td>
+          <td><button class="btn ghost sm">Compare</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="aff-note">Fees shown are illustrative placeholders in this mockup. <a href="#" style="color:var(--b-text);text-decoration:underline">Full comparison and methodology →</a></p>
+  </div>
+</section>
+
+<!-- ============ newsletter ============ -->
+<section style="padding-top:0">
+  <div class="wrap">
     <div class="news">
       <div>
-        <h4>Get smarter about money</h4>
-        <p>Join <span class="num">20,000+</span> readers. One email, every Tuesday. No spam, unsubscribe anytime.</p>
+        <h2>One email. Every Tuesday.</h2>
+        <p>What changed in Singapore's rules and rates this week, what it does to your numbers, and the one thing worth doing about it. Join <span class="num">20,000+</span> readers.</p>
       </div>
       <form class="news-form" onsubmit="return false">
-        <input type="email" placeholder="Enter your email address" aria-label="Email address">
+        <input type="email" placeholder="your@email.com" aria-label="Email address">
         <button type="submit">Subscribe</button>
       </form>
     </div>
   </div>
+</section>
 
-  <div class="footer">
-    <b>Mockup.</b> Every figure, rating and article on this page is illustrative placeholder content, not a claim — nothing here has been sourced or verified. Layout and type follow <span class="num">C:\dev\design.md</span>; the shell, masthead, tab, card and pill patterns are lifted from money-snowball, sg-property-decision and etf-starter-sg so the three existing tools drop in without restyling. Brand name is a placeholder — change <span class="num">#brand</span> and <span class="num">&lt;title&gt;</span> to swap it.
+<!-- ============ disclosure + footer ============ -->
+<div class="wrap">
+  <div class="disc">
+    <b>Disclosure.</b> Some links here are affiliate links and we may earn a commission at no additional cost to you. Partner content is labelled and written by the sponsor. Neither affects how anything is ranked or reviewed. All of it is general information and education only — it is not financial advice and takes no account of your objectives, situation or needs. <a href="#" style="color:var(--b-text);text-decoration:underline">Full editorial policy →</a>
   </div>
-
+  <div class="foot">
+    <b>Concept mockup.</b> Every figure, rating, headline, date and sponsor on this page is illustrative placeholder content, not a claim — none has been sourced or verified. Brokers are deliberately generic. Tokens and fonts per <span class="num">C:\dev\design.md</span>; the landing scale (96px sections, 66px display, 17px body) is measured from Linear, Stripe, Ramp, Mercury and the FT, and is not yet codified in design.md. Brand name is a placeholder.
+  </div>
 </div>
 
 <script>
-// Tabs are inert in the mockup — active state only, no panes behind them yet.
-document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
-  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
-  t.classList.add('active');
-}));
+/* ---------------------------------------------------------------
+   House numeral rules (design.md): every figure >= 1,000 is grouped,
+   inputs included. A grouped field therefore CANNOT be type="number" —
+   the spec requires a valid floating-point value, so the comma makes it
+   invalid and the browser silently discards it. Hence type="text" +
+   inputmode="numeric", regrouped on blur so the caret does not jump.
+   And +"42,000" is NaN, so every read goes through numOf().
+   --------------------------------------------------------------- */
+const $ = id => document.getElementById(id);
+const fmt = n => Math.round(n).toLocaleString('en-US');
+function numOf(el){ const n = parseFloat(String(el.value).replace(/[^\d.]/g,'')); return isFinite(n) ? n : 0; }
+function groupMoney(el){ const n = numOf(el); el.value = n ? fmt(n) : '0'; }
+
+const REAL_RETURN = 0.04;   // real, after inflation
+const WITHDRAWAL  = 0.04;   // 4% rule -> 25x annual spending
+
+/* Months until the pot reaches 25x spending.
+   FV(n) = P(1+i)^n + PMT * [((1+i)^n - 1) / i],  i = monthly real rate.
+   Solved by stepping rather than logs so the PMT=0 and i=0 cases stay sane. */
+function monthsToTarget(pot, monthlySave, target){
+  const i = Math.pow(1 + REAL_RETURN, 1/12) - 1;
+  if (pot >= target) return 0;
+  if (monthlySave <= 0 && pot * i <= 0) return Infinity;
+  let bal = pot;
+  for (let n = 1; n <= 720; n++){          // cap at 60 years
+    bal = bal * (1 + i) + monthlySave;
+    if (bal >= target) return n;
+  }
+  return Infinity;
+}
+
+function update(){
+  const age    = Math.min(Math.max(parseInt($('age').value, 10) || 0, 18), 70);
+  const spend  = numOf($('spend'));
+  const pot    = numOf($('pot'));
+  const save   = numOf($('save'));
+  const target = spend * (1 / WITHDRAWAL);
+
+  $('out-num').textContent = spend ? 'S$' + fmt(target) : '—';
+
+  if (!spend){
+    $('out-age').textContent = '—';
+    $('out-sub').textContent = 'Enter your annual spending to see the number.';
+    return;
+  }
+  const n = monthsToTarget(pot, save, target);
+  if (n === 0){
+    $('out-age').textContent = 'Now';
+    $('out-sub').textContent = 'You are already at 25x your spending. The question is no longer money.';
+    return;
+  }
+  if (!isFinite(n)){
+    $('out-age').textContent = 'Not yet';
+    $('out-sub').textContent = 'On these inputs the pot does not reach S$' + fmt(target) + ' within 60 years. Change one of them.';
+    return;
+  }
+  const yrs = n / 12;
+  const stopAge = age + yrs;
+  $('out-age').textContent = Math.floor(stopAge);
+  $('out-sub').textContent = fmt(Math.floor(yrs)) + 'y ' + Math.round((yrs % 1) * 12) + 'm away · you need S$' + fmt(target)
+    + ' · that is ' + (pot / target * 100).toFixed(0) + '% of the way there today.';
+}
+
+['age','spend','pot','save'].forEach(id => {
+  const el = $(id);
+  el.addEventListener('input', update);
+  if (el.classList.contains('money')) el.addEventListener('blur', () => { groupMoney(el); update(); });
+});
+
+update();   // pre-computed on first paint — the answer exists before any interaction
 </script>
 </body>
 </html>
