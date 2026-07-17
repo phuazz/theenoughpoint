@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fafaf8">
+<meta name="format-detection" content="telephone=no">
+<!-- Mockup: keep out of search indexes. Remove only when this becomes a real site. -->
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="googlebot" content="noindex, nofollow">
+<title>Middlegame · Singapore — concept mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafaf8; --bg2:#ffffff; --bg3:#f5f5f0; --bg4:#eeeee8; --bg-hover:#f0f0ea;
+  --bd:#e2e0d8; --bd2:#d5d3ca; --bd-strong:#c0beb5;
+  --t1:#1a1a18; --t2:#5c5c56; --t3:#8a8a82; --t4:#b0b0a8;
+  --g:#1a8754; --g2:#22a366; --g-bg:rgba(26,135,84,0.07); --g-bg2:rgba(26,135,84,0.14);
+  --r:#c0392b; --r2:#e74c3c; --r-bg:rgba(192,57,43,0.07); --r-bg2:rgba(192,57,43,0.14);
+  --b:#2563eb; --b2:#3b82f6; --b-bg:rgba(37,99,235,0.06); --b-bg2:rgba(37,99,235,0.12);
+  --a:#b45309; --a-bg:rgba(180,83,9,0.07);
+  --p:#7c3aed; --p-bg:rgba(124,58,237,0.06);
+  --c:#0891b2; --c-bg:rgba(8,145,178,0.06);
+  --pk:#be185d; --pk-bg:rgba(190,24,93,0.06);
+  /* -text variants per C:\dev\design.md — for TEXT; the values above are for fills, borders, and large type */
+  --g-text:#146c43; --r-text:#a93226; --b-text:#1d4ed8; --a-text:#92400e;
+  --p-text:#7c3aed; --c-text:#0e7490; --pk-text:#be185d; --t3-text:#66665e;
+  --serif:'Instrument Serif',Georgia,serif; --sans:'DM Sans',-apple-system,sans-serif; --mono:'JetBrains Mono','SF Mono','Menlo',monospace;
+  --shadow-sm:0 1px 2px rgba(0,0,0,0.04);
+  --shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:0 4px 6px rgba(0,0,0,0.05),0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg:0 10px 15px rgba(0,0,0,0.06),0 4px 6px rgba(0,0,0,0.04);
+  --radius:8px; --radius-lg:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--t1);font-family:var(--sans);line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.shell{max-width:1520px;margin:0 auto;padding:20px 32px 60px}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* ---------- masthead ---------- */
+.masthead{padding:26px 0 20px;border-bottom:2px solid var(--t1);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px}
+.masthead h1{font-family:var(--serif);font-weight:400;font-size:34px;letter-spacing:-0.5px;line-height:1.05}
+.masthead h1 em{font-style:italic;color:var(--t3)}
+.masthead .sub{font-size:13px;color:var(--t2);margin-top:6px;max-width:640px}
+.pills{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.pill{font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;border:1px solid;display:inline-flex;gap:6px;align-items:center;white-space:nowrap}
+.pill-live{background:var(--g-bg);color:var(--g-text);border-color:var(--g-bg2)}
+.pill-live .dot{width:6px;height:6px;border-radius:50%;background:var(--g)}
+.pill-date{background:var(--bg3);color:var(--t2);border-color:var(--bd)}
+.pill-warn{background:var(--a-bg);color:var(--a-text);border-color:rgba(180,83,9,0.2)}
+.btn{font-family:var(--sans);font-size:13px;font-weight:600;padding:9px 16px;border-radius:var(--radius);border:1px solid var(--t1);background:var(--t1);color:#fff;cursor:pointer;min-height:44px;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.btn:hover{background:#000}
+.btn.ghost{background:none;color:var(--t1);border-color:var(--bd2)}
+.btn.ghost:hover{background:var(--bg-hover)}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--bd);margin:8px 0 24px;overflow-x:auto;overflow-y:hidden;position:sticky;top:0;z-index:20;background:var(--bg);-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{position:relative;padding:11px 18px;font-size:14px;font-weight:500;color:var(--t2);background:none;border:none;cursor:pointer;white-space:nowrap;min-height:44px;font-family:var(--sans)}
+.tab:hover{color:var(--t1)}
+.tab.active{color:var(--t1);font-weight:600}
+.tab.active::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:2px;background:var(--t1)}
+
+/* ---------- hero ---------- */
+.hero{display:grid;grid-template-columns:1.35fr 1fr;gap:32px;align-items:center;background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:38px 40px;margin-bottom:26px}
+.hero h2{font-family:var(--serif);font-weight:400;font-size:clamp(32px,4vw,50px);line-height:1.06;letter-spacing:-1px}
+.hero h2 em{font-style:italic;color:var(--t3)}
+.hero .lede{font-size:16px;line-height:1.65;color:var(--t2);margin-top:16px;max-width:56ch}
+.hero-cta{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}
+.hero-side{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:20px 22px}
+.hero-side .lbl{font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:var(--t3-text);margin-bottom:14px}
+.claim{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--bd)}
+.claim:last-child{border-bottom:none;padding-bottom:0}
+.claim-k{font-size:14px;font-weight:600}
+.claim-v{font-size:13px;color:var(--t2);margin-top:2px;line-height:1.5}
+.tick{flex:none;width:18px;height:18px;border-radius:50%;background:var(--b-bg2);color:var(--b-text);font-size:11px;font-weight:700;display:grid;place-items:center;margin-top:2px}
+
+/* ---------- topic tiles ---------- */
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;margin:30px 0 12px}
+.sec-head h3{font-size:12px;text-transform:uppercase;letter-spacing:0.8px;font-weight:700;color:var(--t2)}
+.sec-head a{font-size:12px;color:var(--b-text);font-weight:500}
+.tiles{display:grid;grid-template-columns:repeat(8,1fr);gap:1px;background:var(--bd);border:1px solid var(--bd);border-radius:var(--radius-lg);overflow:hidden}
+.tile{background:var(--bg2);padding:16px 14px 14px;display:flex;flex-direction:column;gap:6px;min-width:0;cursor:pointer}
+.tile:hover{background:var(--bg-hover)}
+.tile-k{font-size:10px;font-family:var(--mono);font-weight:700;letter-spacing:0.5px;color:var(--t3-text)}
+.tile-n{font-size:14px;font-weight:600;letter-spacing:-0.2px}
+.tile-d{font-size:12px;color:var(--t2);line-height:1.45;flex:1}
+.tile-s{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--b-text)}
+
+/* ---------- 3-col body ---------- */
+.grid3{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:18px;margin-top:22px;align-items:start}
+.card{background:var(--bg2);border:1px solid var(--bd);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:18px 20px;min-width:0}
+.card h3{font-size:12px;text-transform:uppercase;letter-spacing:0.8px;font-weight:700;color:var(--t2);margin-bottom:14px;display:flex;justify-content:space-between;align-items:baseline}
+.card h3 a{font-size:12px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--b-text)}
+
+.art{display:grid;grid-template-columns:104px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid var(--bd)}
+.art:first-of-type{padding-top:0}
+.art:last-of-type{border-bottom:none;padding-bottom:0}
+.art-img{background:var(--bg4);border:1px solid var(--bd);border-radius:var(--radius);height:76px;display:grid;place-items:center;font-size:9px;font-family:var(--mono);color:var(--t3-text);letter-spacing:0.5px}
+.art-cat{font-size:10px;text-transform:uppercase;letter-spacing:0.8px;font-weight:700;color:var(--c-text)}
+.art-t{font-size:16px;font-weight:600;line-height:1.35;margin:5px 0 4px;letter-spacing:-0.2px}
+.art:hover .art-t{color:var(--b-text)}
+.art-d{font-size:13px;color:var(--t2);line-height:1.55}
+.art-m{font-size:11px;font-family:var(--mono);color:var(--t3-text);margin-top:7px}
+
+/* ---------- monetisation slots ---------- */
+.slot-lbl{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;padding:3px 8px;border-radius:4px;display:inline-block}
+.slot-spon{background:var(--a-bg);color:var(--a-text);border:1px solid rgba(180,83,9,0.2)}
+.slot-aff{background:var(--p-bg);color:var(--p-text);border:1px solid rgba(124,58,237,0.2)}
+.spon-box{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:16px;margin-top:12px}
+.spon-logo{height:64px;background:var(--bg4);border:1px dashed var(--bd2);border-radius:var(--radius);display:grid;place-items:center;font-family:var(--mono);font-size:10px;color:var(--t3-text);margin-bottom:12px}
+.spon-t{font-size:15px;font-weight:600;letter-spacing:-0.2px}
+.spon-d{font-size:12px;color:var(--t2);line-height:1.5;margin:6px 0 12px}
+.spon-foot{font-size:10px;font-family:var(--mono);color:var(--t3-text);margin-top:10px}
+
+.aff{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--bd)}
+.aff:last-of-type{border-bottom:none}
+.aff-n{font-size:13px;font-weight:600}
+.aff-d{font-size:11px;color:var(--t2);line-height:1.4;margin-top:2px}
+.aff-r{font-family:var(--mono);font-size:11px;color:var(--a-text);margin-top:3px;letter-spacing:0.5px}
+.aff-b{font-size:11px;font-weight:600;padding:6px 11px;border:1px solid var(--bd2);border-radius:var(--radius);background:var(--bg2);white-space:nowrap;cursor:pointer;min-height:32px}
+.aff-b:hover{background:var(--bg-hover);border-color:var(--t1)}
+
+.pop{counter-reset:p;list-style:none}
+.pop li{counter-increment:p;display:grid;grid-template-columns:auto 1fr;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd);font-size:13px;line-height:1.45}
+.pop li:last-child{border-bottom:none}
+.pop li::before{content:counter(p);font-family:var(--mono);font-size:11px;font-weight:700;color:var(--t3-text)}
+.pop li:hover{color:var(--b-text)}
+
+/* ---------- newsletter + disclosure ---------- */
+.foot-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:18px;margin-top:22px}
+.disc{background:var(--a-bg);border:1px solid rgba(180,83,9,0.2);border-radius:var(--radius-lg);padding:16px 18px;font-size:12px;color:var(--t2);line-height:1.6}
+.disc b{color:var(--a-text)}
+.news{background:var(--t1);color:#fff;border-radius:var(--radius-lg);padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.news h4{font-family:var(--serif);font-weight:400;font-size:24px;letter-spacing:-0.3px}
+.news p{font-size:12px;color:#b0b0a8;margin-top:4px}
+.news-form{display:flex;gap:8px}
+.news-form input{font-family:var(--sans);font-size:13px;padding:10px 12px;border:1px solid #3a3a36;background:#262622;color:#fff;border-radius:var(--radius);min-width:200px;min-height:44px}
+.news-form input::placeholder{color:var(--t3)}
+.news-form button{font-family:var(--sans);font-size:13px;font-weight:600;padding:10px 18px;border:none;border-radius:var(--radius);background:#fff;color:var(--t1);cursor:pointer;min-height:44px}
+.footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--bd);font-size:12px;color:var(--t3-text);line-height:1.6;max-width:1040px}
+
+@media(max-width:1200px){
+  .tiles{grid-template-columns:repeat(4,1fr)}
+  .grid3{grid-template-columns:1fr 1fr}
+  .grid3 .card:first-child{grid-column:1/-1}
+}
+@media(max-width:768px){
+  .shell{padding:16px 18px 48px}
+  .hero{grid-template-columns:1fr;padding:26px 22px;gap:24px}
+  .grid3,.foot-grid{grid-template-columns:1fr}
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .masthead h1{font-size:28px}
+  .news{flex-direction:column;align-items:flex-start}
+  .news-form{width:100%}
+  .news-form input{flex:1;min-width:0}
+}
+@media(max-width:480px){
+  .art{grid-template-columns:1fr}
+  .art-img{height:130px}
+}
+/* touch: 44px minimum tap target per design.md */
+@media(pointer:coarse){
+  .aff-b{min-height:44px;padding:0 14px}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- ============ masthead ============ -->
+  <header class="masthead">
+    <div>
+      <h1 id="brand">Middlegame · <em>Singapore</em></h1>
+      <div class="sub">Work less. Invest better. Spend with intention. Decision tools and honest numbers for Singaporeans in the middle of it.</div>
+    </div>
+    <div class="pills">
+      <span class="pill pill-warn">MOCKUP · illustrative figures</span>
+      <span class="pill pill-date">every Tuesday</span>
+      <button class="btn">✉ Subscribe</button>
+    </div>
+  </header>
+
+  <!-- ============ nav ============ -->
+  <nav class="tabs">
+    <button class="tab active">Home</button>
+    <button class="tab">Freedom Roadmap</button>
+    <button class="tab">Money Tools &amp; Reviews</button>
+    <button class="tab">Business Experiments</button>
+    <button class="tab">Value Living</button>
+    <button class="tab">About</button>
+  </nav>
+
+  <!-- ============ hero ============ -->
+  <section class="hero">
+    <div>
+      <h2>The decisions that set up your <em>second half</em> get made now.</h2>
+      <p class="lede">Property, portfolio, insurance, and whether you can afford to stop. Real numbers run against Singapore rules — CPF, SRS, TDSR, ABSD, LTV — not American blog advice with the serial numbers filed off.</p>
+      <div class="hero-cta">
+        <button class="btn">Start with the roadmap →</button>
+        <button class="btn ghost">Open the calculators</button>
+      </div>
+    </div>
+    <div class="hero-side">
+      <div class="lbl">What this is</div>
+      <div class="claim"><span class="tick">✓</span><div><div class="claim-k">Tools, not takes</div><div class="claim-v">Every article ends in a calculator you can put your own numbers into.</div></div></div>
+      <div class="claim"><span class="tick">✓</span><div><div class="claim-k">Singapore-specific</div><div class="claim-v">Rules encoded from MAS, IRAS, CPF and URA. Updated when they change.</div></div></div>
+      <div class="claim"><span class="tick">✓</span><div><div class="claim-k">Methodology shown</div><div class="claim-v">Assumptions stated, sources linked, workings open.</div></div></div>
+      <div class="claim"><span class="tick">✓</span><div><div class="claim-k">Two friends, mid-forties</div><div class="claim-v">One runs money for a living. One left to build things. Both still deciding.</div></div></div>
+    </div>
+  </section>
+
+  <!-- ============ topic tiles ============ -->
+  <div class="sec-head"><h3>Decision tools</h3><a href="#">All tools →</a></div>
+  <div class="tiles">
+    <div class="tile"><div class="tile-k">CPF</div><div class="tile-n">Top up or invest?</div><div class="tile-d">What the FRS actually costs you in flexibility.</div><div class="tile-s">Run it →</div></div>
+    <div class="tile"><div class="tile-k">SRS</div><div class="tile-n">Relief vs lock-in</div><div class="tile-d">Tax saved today against 20 years frozen.</div><div class="tile-s">Run it →</div></div>
+    <div class="tile"><div class="tile-k">ETF</div><div class="tile-n">Core &amp; satellite</div><div class="tile-d">Irish UCITS, domicile, estate tax, TER.</div><div class="tile-s">Run it →</div></div>
+    <div class="tile"><div class="tile-k">PROP</div><div class="tile-n">Can I afford it?</div><div class="tile-d">TDSR, MSR, LTV and the age-65 cliff.</div><div class="tile-s">Run it →</div></div>
+    <div class="tile"><div class="tile-k">PROP</div><div class="tile-n">Is this price fair?</div><div class="tile-d">Asking price against district percentile.</div><div class="tile-s">Run it →</div></div>
+    <div class="tile"><div class="tile-k">FIRE</div><div class="tile-n">The enough point</div><div class="tile-d">The number, and the year you reach it.</div><div class="tile-s">Run it →</div></div>
+    <div class="tile"><div class="tile-k">INS</div><div class="tile-n">Cover gap check</div><div class="tile-d">What you hold versus what you need.</div><div class="tile-s">Run it →</div></div>
+    <div class="tile"><div class="tile-k">LIFE</div><div class="tile-n">Sabbatical cost</div><div class="tile-d">What a year off does to the number.</div><div class="tile-s">Run it →</div></div>
+  </div>
+
+  <!-- ============ body ============ -->
+  <div class="grid3">
+
+    <!-- latest -->
+    <div class="card">
+      <h3>Latest <a href="#">View all →</a></h3>
+
+      <a class="art" href="#">
+        <div class="art-img">IMAGE 4:3</div>
+        <div>
+          <div class="art-cat">CPF &amp; Retirement</div>
+          <div class="art-t">The Full Retirement Sum went up again. Here is what it does to your plan.</div>
+          <div class="art-d">The FRS rises roughly <span class="num">3.5%</span> a year. We ran a <span class="num">42</span>-year-old's numbers forward to <span class="num">2,045</span> and the gap is not where most people think.</div>
+          <div class="art-m">16 May · 8 min · with calculator</div>
+        </div>
+      </a>
+
+      <a class="art" href="#">
+        <div class="art-img">IMAGE 4:3</div>
+        <div>
+          <div class="art-cat">Cash</div>
+          <div class="art-t">T-bills vs SSB vs fixed deposits: where to park cash right now</div>
+          <div class="art-d">Six-month T-bill cut-off is <span class="num">2.68%</span>. SSB 10-year average is <span class="num">2.41%</span>. The right answer depends on when you need it back, not the headline.</div>
+          <div class="art-m">13 May · 7 min · updated weekly</div>
+        </div>
+      </a>
+
+      <a class="art" href="#">
+        <div class="art-img">IMAGE 4:3</div>
+        <div>
+          <div class="art-cat">Property</div>
+          <div class="art-t">We priced every condo in District 19 against its own district. Half look expensive.</div>
+          <div class="art-d">Turnover, lease decay and price versus district median across <span class="num">512</span> projects. The scorecard is open — check yours before you view.</div>
+          <div class="art-m">9 May · 11 min · with tool</div>
+        </div>
+      </a>
+
+      <a class="art" href="#">
+        <div class="art-img">IMAGE 4:3</div>
+        <div>
+          <div class="art-cat">Value Living</div>
+          <div class="art-t">Three days a week is not semi-retirement. It is a different job.</div>
+          <div class="art-d">What actually changed when income dropped <span class="num">40%</span> and time went up — and the four things that were harder than the money.</div>
+          <div class="art-m">2 May · 6 min</div>
+        </div>
+      </a>
+    </div>
+
+    <!-- sponsored + popular -->
+    <div>
+      <div class="card">
+        <h3>Sponsored</h3>
+        <span class="slot-lbl slot-spon">Paid placement</span>
+        <div class="spon-box">
+          <div class="spon-logo">SPONSOR LOGO</div>
+          <div class="spon-t">Partner headline sits here</div>
+          <div class="spon-d">Two lines of sponsor copy, written by the sponsor, reviewed against the editorial policy. Visually distinct from editorial by design — tinted surface, amber label, dashed logo frame.</div>
+          <button class="btn ghost" style="width:100%;justify-content:center">Learn more</button>
+          <div class="spon-foot">Paid placement · does not affect rankings</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <h3>Popular this week</h3>
+        <ol class="pop">
+          <li>How we got to FI at <span class="num">39</span> on a <span class="num">$7,000</span> monthly income</li>
+          <li>SRS for property or ETFs — the honest comparison</li>
+          <li>HDB or condo: which actually builds more wealth?</li>
+          <li>Our <span class="num">2,026</span> portfolio update — CPF, SRS, ETFs, REITs</li>
+          <li>Seven side incomes that work in Singapore (and four that do not)</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- affiliate -->
+    <div class="card">
+      <h3>Broker comparison</h3>
+      <span class="slot-lbl slot-aff">Affiliate links</span>
+      <div style="font-size:12px;color:var(--t2);line-height:1.55;margin:12px 0 4px">
+        Ranked on published fees and market access, not on commission. Methodology is linked at the bottom of every table.
+      </div>
+      <div class="aff">
+        <div>
+          <div class="aff-n">Broker A</div>
+          <div class="aff-d">Lowest fees for SGX, US and LSE</div>
+          <div class="aff-r">★★★★☆ <span style="color:var(--t3-text)">4.4</span></div>
+        </div>
+        <button class="aff-b">Compare</button>
+      </div>
+      <div class="aff">
+        <div>
+          <div class="aff-n">Broker B</div>
+          <div class="aff-d">Free US stocks, terms apply</div>
+          <div class="aff-r">★★★★☆ <span style="color:var(--t3-text)">4.1</span></div>
+        </div>
+        <button class="aff-b">Compare</button>
+      </div>
+      <div class="aff">
+        <div>
+          <div class="aff-n">Broker C</div>
+          <div class="aff-d">Wide global access, CPF/SRS support</div>
+          <div class="aff-r">★★★☆☆ <span style="color:var(--t3-text)">3.8</span></div>
+        </div>
+        <button class="aff-b">Compare</button>
+      </div>
+      <div style="margin-top:14px"><a href="#" style="font-size:12px;color:var(--b-text);font-weight:500">See full comparison &amp; methodology →</a></div>
+    </div>
+
+  </div>
+
+  <!-- ============ newsletter + disclosure ============ -->
+  <div class="foot-grid">
+    <div class="disc">
+      <b>Disclosure.</b> Some links on this site are affiliate links, and we may earn a commission at no additional cost to you. Sponsored placements are labelled as such and are written by the sponsor. Neither affects how products are ranked or reviewed. Everything here is general information and education only — it is not financial advice, and it does not take your objectives, situation or needs into account. <a href="#" style="color:var(--a-text);font-weight:600;text-decoration:underline">Full policy →</a>
+    </div>
+    <div class="news">
+      <div>
+        <h4>Get smarter about money</h4>
+        <p>Join <span class="num">20,000+</span> readers. One email, every Tuesday. No spam, unsubscribe anytime.</p>
+      </div>
+      <form class="news-form" onsubmit="return false">
+        <input type="email" placeholder="Enter your email address" aria-label="Email address">
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer">
+    <b>Mockup.</b> Every figure, rating and article on this page is illustrative placeholder content, not a claim — nothing here has been sourced or verified. Layout and type follow <span class="num">C:\dev\design.md</span>; the shell, masthead, tab, card and pill patterns are lifted from money-snowball, sg-property-decision and etf-starter-sg so the three existing tools drop in without restyling. Brand name is a placeholder — change <span class="num">#brand</span> and <span class="num">&lt;title&gt;</span> to swap it.
+  </div>
+
+</div>
+
+<script>
+// Tabs are inert in the mockup — active state only, no panes behind them yet.
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+  t.classList.add('active');
+}));
+</script>
+</body>
+</html>
