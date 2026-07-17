@@ -13,7 +13,9 @@ A single-page visual mockup of a Singapore personal-finance media concept — re
 
 All numbers, star ratings, article headlines and dates are **illustrative placeholder content**. None has been sourced or verified. Brokers appear as "Broker A / B / C" rather than real firms, deliberately — no real product is described, ranked or rated here. The sponsored and affiliate slots are layout placeholders showing where such content *would* sit; no commercial relationship exists.
 
-The page carries `noindex, nofollow` and is not listed on the landing hub. It is public only because GitHub Pages has no private-serving tier below Enterprise.
+The page carries `noindex, nofollow, noarchive` and is not listed on the landing hub. It is public only because GitHub Pages has no private-serving tier below Enterprise.
+
+**Do not add a `robots.txt` to `docs/`.** It would do nothing today — crawlers honour robots.txt only at the domain root, and `phuazz.github.io/robots.txt` does not exist. Worse, if a custom domain is ever mapped to this repo, `docs/robots.txt` *becomes* the root file and would silently apply to the whole site. The meta `noindex` is the correct control, and it works precisely because nothing blocks crawlers from fetching the page and reading it. Blocking the fetch would prevent de-indexing, not cause it.
 
 ## Brand name
 
