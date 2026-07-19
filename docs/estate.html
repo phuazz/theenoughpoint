@@ -194,9 +194,13 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--t3-text);line-height:1.65}
              claim is that this catches ordinary holdings, so the default has to be one.
              It yields ~S$51,000 of tax: unmistakably material, without being a
              rich-person illustration that contradicts the copy above it.
-             Slider tops out at S$2,000,000 so the common range has real resolution;
-             larger holders can type a figure. -->
-        <input type="range" id="us-r" min="0" max="2000000" step="10000" value="250000" aria-label="US-situated holdings">
+
+             The slider is EASED, not linear (see posToVal below). A linear track over a
+             range this wide wastes its resolution: the informative part of the curve is
+             the low end, where the threshold and the graduated brackets do surprising
+             things, while above ~US$1m the marginal rate is a flat 40% and the line goes
+             straight. Easing gives fine control under S$500k and still reaches S$5m. -->
+        <input type="range" id="us-r" min="0" max="1000" step="1" value="224" aria-label="US-situated holdings">
         <div class="f-hint">The one number that matters — read it straight off your statement. Only US-incorporated companies and US-domiciled funds count. Not sure which yours are? <a href="#mech">How to tell →</a></div>
       </div>
 
@@ -463,12 +467,28 @@ function update(){
 }
 
 /* Two-way binding, house numeral rules: grouped >= 1,000, so text inputs not number. */
-[['us','us-r',1]].forEach(([tid,rid,dp])=>{
-  const t=$(tid), r=$(rid);
-  r.addEventListener('input',()=>{ const v=+r.value; t.value = dp===2?v.toFixed(2):(v>=1000?fmt(v):String(v)); update(); });
-  t.addEventListener('input',()=>{ const v=numOf(t); if(v>=+r.min&&v<=+r.max) r.value=v; update(); });
-  t.addEventListener('blur',()=>{ const v=numOf(t); t.value = dp===2?v.toFixed(2):(v>=1000?fmt(v):String(v)); update(); });
-});
+/* ---------------------------------------------------------------
+   Eased slider. The track carries positions 0..1000; value = SLIDER_MAX *
+   (pos/1000)^2. Squaring puts roughly a quarter of the track under S$300,000,
+   which is where the answer is least obvious, while still reaching S$5m at the
+   far end. Typing is unbounded — anything larger computes correctly and simply
+   pins the thumb, so the cap constrains the drag, never the arithmetic.
+   Rounding is adaptive so dragging yields readable figures, not S$247,830.
+   --------------------------------------------------------------- */
+const SLIDER_MAX = 5_000_000, CURVE = 2;
+function roundNice(v){
+  const step = v < 100_000 ? 1_000 : v < 1_000_000 ? 5_000 : 25_000;
+  return Math.round(v/step)*step;
+}
+const posToVal = p => roundNice(SLIDER_MAX * Math.pow(p/1000, CURVE));
+const valToPos = v => Math.round(1000 * Math.pow(Math.min(v, SLIDER_MAX)/SLIDER_MAX, 1/CURVE));
+
+(() => {
+  const t = $('us'), r = $('us-r');
+  r.addEventListener('input', () => { t.value = fmt(posToVal(+r.value)); update(); });
+  t.addEventListener('input', () => { r.value = valToPos(numOf(t)); update(); });
+  t.addEventListener('blur',  () => { t.value = fmt(numOf(t)); update(); });
+})();
 update();   // pre-computed on first paint
 </script>
 </body>
