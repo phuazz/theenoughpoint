@@ -85,21 +85,39 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 .split-l i{font-style:normal;display:inline-flex;align-items:center;gap:6px}
 .dot{width:9px;height:9px;border-radius:2px;flex:none}
 
-/* domicile comparison */
+/* mechanism diagram — HTML/CSS rather than SVG, so text never rescales
+   inside a viewBox (the design.md trap) and it reflows on a phone */
+.flow{margin:18px 0 6px}
+.flow-row{display:grid;grid-template-columns:1fr auto 1.2fr auto auto;gap:10px;align-items:center;padding:14px 0;border-bottom:1px solid var(--bd)}
+.flow-row:last-child{border-bottom:none}
+.flow-box{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--radius);padding:9px 12px;font-size:13px;line-height:1.35}
+.flow-box b{display:block;font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:var(--t3-text);font-weight:700;margin-bottom:2px}
+.flow-arr{color:var(--t3-text);font-size:15px}
+.flow-v{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;padding:5px 11px;border-radius:999px;white-space:nowrap;border:1px solid}
+.flow-v.bad{background:var(--r-bg);color:var(--r-text);border-color:var(--r-bg2)}
+.flow-v.ok{background:var(--g-bg);color:var(--g-text);border-color:var(--g-bg2)}
+@media(max-width:720px){
+  .flow-row{grid-template-columns:1fr;gap:7px;text-align:left}
+  .flow-arr{display:none}
+  .flow-v{justify-self:start}
+}
+
 /* the fact that reframes the whole question */
 .freeze{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;background:var(--r-bg);border:1px solid var(--r-bg2);border-radius:var(--radius-lg);padding:18px 20px;margin:22px 0}
+@media(max-width:600px){ .freeze{grid-template-columns:1fr;gap:10px} }
 .freeze-n{font-family:var(--serif);font-size:34px;line-height:0.95;color:var(--r-text);white-space:nowrap;text-align:center}
 .freeze-n span{display:block;font-family:var(--sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
-.freeze h4{font-size:15px;font-weight:600;margin-bottom:5px}
+.freeze h4{font-size:19px;font-weight:600;letter-spacing:-0.2px;margin-bottom:7px}
 .freeze p{font-size:14px;color:var(--t2);line-height:1.6;margin:0 0 9px}
 .freeze p:last-child{margin-bottom:0}
 .freeze b{color:var(--t1);font-weight:600}
 
+/* domicile comparison */
 .cmpgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
 .dcard{border:1px solid var(--bd);border-radius:var(--radius);padding:15px 16px;background:var(--bg2)}
 .dcard.exposed{border-color:rgba(181,100,58,0.4);background:var(--clay-bg)}
 .dcard.clean{border-color:var(--brand-bg2);background:var(--brand-bg)}
-.dcard h4{font-size:13px;font-weight:600;margin-bottom:4px}
+.dcard h4{font-size:14px;font-weight:600;margin-bottom:4px}
 .dcard .v{font-family:var(--mono);font-size:22px;font-weight:600;letter-spacing:-0.5px;margin:6px 0 4px}
 .dcard.exposed .v{color:var(--clay-text)}
 .dcard.clean .v{color:var(--brand-text)}
@@ -112,13 +130,15 @@ td{padding:9px 10px 9px 0;border-bottom:1px solid var(--bd);font-family:var(--mo
 td:first-child{font-family:var(--sans)}
 tr.hl td{background:var(--brand-bg);font-weight:600}
 
-h2{font-family:var(--serif);font-weight:400;font-size:28px;letter-spacing:-0.3px;margin:34px 0 12px}
-h3{font-size:15px;font-weight:600;margin:20px 0 6px}
+/* Type scale: 44 / 30 / 19 / 16. The mid tiers were previously 15-16px against
+   16px body, so h3 and h4 read as bold paragraphs rather than as structure. */
+h2{font-family:var(--serif);font-weight:400;font-size:30px;line-height:1.15;letter-spacing:-0.3px;margin:40px 0 12px}
+h3{font-size:19px;font-weight:600;letter-spacing:-0.2px;margin:20px 0 6px}
 p{margin-bottom:12px}
 .note{background:var(--a-bg);border:1px solid rgba(180,83,9,0.2);border-radius:var(--radius);padding:14px 16px;font-size:14px;line-height:1.6;margin:16px 0}
 .note b{color:var(--a-text)}
 .handoff{background:var(--b-bg);border:1px solid var(--b-bg2);border-radius:var(--radius-lg);padding:18px 20px;margin:26px 0}
-.handoff h3{font-size:16px;font-weight:600;margin-bottom:6px}
+.handoff h3{font-size:19px;font-weight:600;letter-spacing:-0.2px;margin-bottom:7px}
 .handoff p{font-size:14px;color:var(--t2);line-height:1.6;margin-bottom:8px}
 .handoff a{font-weight:600}
 .mocknote{font-size:12px!important;color:var(--t3-text)!important;border-top:1px solid var(--b-bg2);padding-top:10px;margin:12px 0 0!important}
@@ -194,10 +214,38 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--t3-text);line-height:1.65}
     </div>
   </div>
 
+  <h2>But my broker is in Singapore. Does that not protect me?</h2>
+  <p>No — and this is the first thing almost everyone assumes, so it is worth settling before
+  anything else. The exposure attaches to the <b>asset</b>, not to the account it sits in.
+  Moving the same American shares between platforms changes the custodian and the login, not
+  what you own. A Singapore-incorporated, MAS-regulated broker holding US shares on your behalf
+  is a Singapore company holding US-situated assets. The assets are still American.</p>
+
+  <div class="flow">
+    <div class="flow-row">
+      <div class="flow-box"><b>Your account</b>Singapore broker</div>
+      <div class="flow-arr">→</div>
+      <div class="flow-box"><b>What you own</b>Shares in a US-incorporated company</div>
+      <div class="flow-arr">→</div>
+      <div class="flow-v bad">US-situated · exposed</div>
+    </div>
+    <div class="flow-row">
+      <div class="flow-box"><b>Your account</b>Singapore broker</div>
+      <div class="flow-arr">→</div>
+      <div class="flow-box"><b>What you own</b>A fund domiciled outside the US, holding the same companies</div>
+      <div class="flow-arr">→</div>
+      <div class="flow-v ok">Not US-situated</div>
+    </div>
+  </div>
+  <p style="font-size:13px;color:var(--t3-text)">Same broker in both rows. The account is not what the rule looks at.</p>
+
+  <blockquote>"Generally, no matter where stock certificates are physically located, stock
+  of corporations organized in or under U.S. law is property located in the United States."</blockquote>
+
   <div class="freeze">
-    <div class="freeze-n">§6324<span>the catch</span></div>
+    <div class="freeze-n">Yes<span>and that is the trap</span></div>
     <div>
-      <h4>"Can my family just sell it and move the money out?"</h4>
+      <h4>"Then can my family just sell it and move the money out?"</h4>
       <p>Practically, often yes. An account with a password does not lock itself, and the IRS does not reach into your
       brokerage. That is what most people quietly assume, and it is why this is worth understanding before you rely on it.</p>
       <p>It does not make the bill disappear. The tax is assessed on the value at the <b>date of death</b>, so it
@@ -236,32 +284,6 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--t3-text);line-height:1.65}
     prices one thing. It is not the whole decision, and it does not tell you what to buy.
   </div>
 
-  <h2>Why US$60,000, and why the rate climbs</h2>
-  <p>There is no separately legislated US$60,000 allowance. A non-resident estate gets a
-  unified credit of <b>US$13,000</b> — and US$13,000 happens to be exactly the tax the
-  schedule produces on US$60,000. The threshold is the arithmetic consequence of the
-  credit meeting the rate table, which is why it has never moved with inflation.</p>
-
-  <table>
-    <thead><tr><th>US-situated assets</th><th>Estate tax</th><th>Effective rate</th></tr></thead>
-    <tbody id="tbl"></tbody>
-  </table>
-  <p style="font-size:13px;color:var(--t3-text)">Computed from the statutory schedule below, less the US$13,000 credit. Assumes no deductions and no treaty relief. Your row is highlighted.</p>
-
-  <div class="handoff">
-    <h3 style="margin-top:0">So what would it cost to hold this differently?</h3>
-    <p>Removing that <b class="num" id="hk-tax">—</b> exposure means holding the same companies
-    through a fund domiciled somewhere other than the United States. That changes more than this
-    one tax: annual cost, dividend withholding, which platforms carry it, and whether it can sit
-    in your SRS or CPF at all. Some of those move in your favour and some do not.</p>
-    <p>The point is not that one answer is right. It is that you can see the whole picture for
-    your own holdings instead of optimising for the scariest number on the page.</p>
-    <p><a href="https://phuazz.github.io/etf-starter-sg/" rel="noopener">Compare the trade-offs →</a></p>
-    <p class="mocknote"><b>Mock placeholder</b> — points at an existing tool for demonstration.
-    Before publication this must be our own version, de-identified and with fund-level
-    recommendations removed.</p>
-  </div>
-
   <h2 id="mech">What changes your exposure</h2>
   <p>Three mechanisms. None of them is a recommendation, and each carries trade-offs
   that this tool does not price.</p>
@@ -280,15 +302,31 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--t3-text);line-height:1.65}
   They also carry cost, complexity and consequences far beyond this one tax, which is why
   they belong in a conversation with a professional rather than in a calculator.</div>
 
-  <h2>Does your broker protect you?</h2>
-  <p>No. The exposure attaches to the asset, not the account it sits in. Moving the same
-  American shares between platforms changes the custodian and the login, not what you own.
-  A Singapore-incorporated, MAS-regulated broker holding US shares for you is a Singapore
-  company holding US-situated assets — the assets are still American. The IRS puts it
-  plainly:</p>
+  <div class="handoff">
+    <h3 style="margin-top:0">So what would it cost to hold this differently?</h3>
+    <p>Removing that <b class="num" id="hk-tax">—</b> exposure means holding the same companies
+    through a fund domiciled somewhere other than the United States. That changes more than this
+    one tax: annual cost, dividend withholding, which platforms carry it, and whether it can sit
+    in your SRS or CPF at all. Some of those move in your favour and some do not.</p>
+    <p>The point is not that one answer is right. It is that you can see the whole picture for
+    your own holdings instead of optimising for the scariest number on the page.</p>
+    <p><a href="https://phuazz.github.io/etf-starter-sg/" rel="noopener">Compare the trade-offs →</a></p>
+    <p class="mocknote"><b>Mock placeholder</b> — points at an existing tool for demonstration.
+    Before publication this must be our own version, de-identified and with fund-level
+    recommendations removed.</p>
+  </div>
 
-  <blockquote>"Generally, no matter where stock certificates are physically located, stock
-  of corporations organized in or under U.S. law is property located in the United States."</blockquote>
+  <h2>Why US$60,000, and why the rate climbs</h2>
+  <p>There is no separately legislated US$60,000 allowance. A non-resident estate gets a
+  unified credit of <b>US$13,000</b> — and US$13,000 happens to be exactly the tax the
+  schedule produces on US$60,000. The threshold is the arithmetic consequence of the
+  credit meeting the rate table, which is why it has never moved with inflation.</p>
+
+  <table>
+    <thead><tr><th>US-situated assets</th><th>Estate tax</th><th>Effective rate</th></tr></thead>
+    <tbody id="tbl"></tbody>
+  </table>
+  <p style="font-size:13px;color:var(--t3-text)">Computed from the statutory rate schedule, less the US$13,000 credit. Assumes no deductions and no treaty relief. The row nearest your own holdings is highlighted.</p>
 
   <div class="src">
     <b>Sources — all primary, verified 18 July 2026.</b><br>
