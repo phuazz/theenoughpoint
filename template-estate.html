@@ -138,11 +138,18 @@ h3{font-size:19px;font-weight:600;letter-spacing:-0.2px;margin:20px 0 6px}
 p{margin-bottom:12px}
 .note{background:var(--a-bg);border:1px solid rgba(180,83,9,0.2);border-radius:var(--radius);padding:14px 16px;font-size:14px;line-height:1.6;margin:16px 0}
 .note b{color:var(--a-text)}
-.handoff{background:var(--b-bg);border:1px solid var(--b-bg2);border-radius:var(--radius-lg);padding:18px 20px;margin:26px 0}
+/* house button, lifted verbatim from the main site so the venture has one
+   button, not one per page */
+.btn{font-family:var(--sans);font-size:14px;font-weight:500;padding:0 18px;height:42px;border-radius:var(--radius);border:1px solid var(--t1);background:var(--t1);color:#fff!important;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;text-decoration:none;transition:background .15s ease}
+.btn:hover{background:#000}
+@media(pointer:coarse){ .btn{height:48px} }
+
+.handoff{background:var(--b-bg);border:1px solid var(--b-bg2);border-radius:var(--radius-lg);padding:20px 22px;margin:26px 0}
 .handoff h3{font-size:19px;font-weight:600;letter-spacing:-0.2px;margin-bottom:7px}
 .handoff p{font-size:14px;color:var(--t2);line-height:1.6;margin-bottom:8px}
 .handoff a{font-weight:600}
-.mocknote{font-size:12px!important;color:var(--t3-text)!important;border-top:1px solid var(--b-bg2);padding-top:10px;margin:12px 0 0!important}
+.handoff .cta{margin:16px 0 0}
+.mocknote{font-size:11px!important;color:var(--t3-text)!important;border-top:1px solid var(--b-bg2);padding-top:9px;margin:18px 0 0!important;line-height:1.5}
 .mocknote b{color:var(--a-text)}
 .mech{border-left:3px solid var(--bd2);padding:2px 0 2px 16px;margin:14px 0}
 .mech b{font-weight:600}
@@ -306,12 +313,11 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--t3-text);line-height:1.65}
   <div class="handoff">
     <h3 style="margin-top:0">So what would it cost to hold this differently?</h3>
     <p>Removing that <b class="num" id="hk-tax">—</b> exposure means holding the same companies
-    through a fund domiciled somewhere other than the United States. That changes more than this
-    one tax: annual cost, dividend withholding, which platforms carry it, and whether it can sit
-    in your SRS or CPF at all. Some of those move in your favour and some do not.</p>
-    <p>The point is not that one answer is right. It is that you can see the whole picture for
-    your own holdings instead of optimising for the scariest number on the page.</p>
-    <p><a href="https://phuazz.github.io/etf-starter-sg/" rel="noopener">Compare the trade-offs →</a></p>
+    through a fund domiciled outside the United States. But that also moves annual cost, dividend
+    withholding, which platforms carry it, and whether it can sit in your SRS or CPF at all —
+    some in your favour, some not. Worth seeing the whole picture rather than optimising for the
+    scariest number on this page.</p>
+    <p class="cta"><a class="btn" href="https://phuazz.github.io/etf-starter-sg/" rel="noopener">Compare the alternatives →</a></p>
     <p class="mocknote"><b>Mock placeholder</b> — points at an existing tool for demonstration.
     Before publication this must be our own version, de-identified and with fund-level
     recommendations removed.</p>
