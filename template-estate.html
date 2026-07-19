@@ -86,6 +86,14 @@ input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;bac
 .dot{width:9px;height:9px;border-radius:2px;flex:none}
 
 /* domicile comparison */
+/* the fact that reframes the whole question */
+.freeze{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;background:var(--r-bg);border:1px solid var(--r-bg2);border-radius:var(--radius-lg);padding:18px 20px;margin:22px 0}
+.freeze-n{font-family:var(--serif);font-size:40px;line-height:0.95;color:var(--r-text);white-space:nowrap;text-align:center}
+.freeze-n span{display:block;font-family:var(--sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.freeze h4{font-size:15px;font-weight:600;margin-bottom:5px}
+.freeze p{font-size:14px;color:var(--t2);line-height:1.6;margin:0}
+.freeze b{color:var(--t1);font-weight:600}
+
 .cmpgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
 .dcard{border:1px solid var(--bd);border-radius:var(--radius);padding:15px 16px;background:var(--bg2)}
 .dcard.exposed{border-color:rgba(181,100,58,0.4);background:var(--clay-bg)}
@@ -108,6 +116,12 @@ h3{font-size:15px;font-weight:600;margin:20px 0 6px}
 p{margin-bottom:12px}
 .note{background:var(--a-bg);border:1px solid rgba(180,83,9,0.2);border-radius:var(--radius);padding:14px 16px;font-size:14px;line-height:1.6;margin:16px 0}
 .note b{color:var(--a-text)}
+.handoff{background:var(--b-bg);border:1px solid var(--b-bg2);border-radius:var(--radius-lg);padding:18px 20px;margin:26px 0}
+.handoff h3{font-size:16px;font-weight:600;margin-bottom:6px}
+.handoff p{font-size:14px;color:var(--t2);line-height:1.6;margin-bottom:8px}
+.handoff a{font-weight:600}
+.mocknote{font-size:12px!important;color:var(--t3-text)!important;border-top:1px solid var(--b-bg2);padding-top:10px;margin:12px 0 0!important}
+.mocknote b{color:var(--a-text)}
 .mech{border-left:3px solid var(--bd2);padding:2px 0 2px 16px;margin:14px 0}
 .mech b{font-weight:600}
 blockquote{border-left:3px solid var(--brand);padding:4px 0 4px 16px;margin:16px 0;font-size:15px;color:var(--t2);font-style:italic}
@@ -141,20 +155,11 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--t3-text);line-height:1.65}
     <div class="tool-body">
       <div class="f">
         <div class="f-top">
-          <label for="pf">Your investment portfolio</label>
-          <div class="f-val"><span class="pre">S$</span><input type="text" id="pf" value="1,500,000" inputmode="numeric"></div>
+          <label for="us">How much do you hold in US shares and US-domiciled funds?</label>
+          <div class="f-val"><span class="pre">S$</span><input type="text" id="us" value="900,000" inputmode="numeric"></div>
         </div>
-        <input type="range" id="pf-r" min="50000" max="10000000" step="50000" value="1500000" aria-label="Portfolio value">
-        <div class="f-hint">Everything you hold in securities. Not your home, not your CPF.</div>
-      </div>
-
-      <div class="f">
-        <div class="f-top">
-          <label for="sh">Share of it in US-situated assets</label>
-          <div class="f-val"><input type="text" class="w-sm" id="sh" value="60" inputmode="numeric"><span class="pre">%</span></div>
-        </div>
-        <input type="range" id="sh-r" min="0" max="100" step="1" value="60" aria-label="Share in US-situated assets">
-        <div class="f-hint">Shares in US-incorporated companies, and funds domiciled in the US. Not sure? The mechanisms below explain how to tell.</div>
+        <input type="range" id="us-r" min="0" max="5000000" step="25000" value="900000" aria-label="US-situated holdings">
+        <div class="f-hint">The one number that matters — read it straight off your statement. Only US-incorporated companies and US-domiciled funds count. Not sure which yours are? <a href="#mech">How to tell →</a></div>
       </div>
 
       <div class="fxline">
@@ -165,12 +170,12 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--t3-text);line-height:1.65}
     <div class="out">
       <div class="out-row">
         <div>
-          <div class="out-l">Potential estate tax</div>
+          <div class="out-l">The IRS could take</div>
           <div class="out-v num" id="tax">—</div>
         </div>
         <div style="text-align:right">
-          <div class="out-l">On exposed assets of</div>
-          <div class="out-v sm num" id="exposed">—</div>
+          <div class="out-l">Leaving your family</div>
+          <div class="out-v sm num" id="keep">—</div>
         </div>
       </div>
       <div class="out-s" id="sub">—</div>
@@ -185,6 +190,18 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--t3-text);line-height:1.65}
         <i><span class="dot" style="background:var(--brand)"></span>Reaches your family <b class="num" id="keep-v">—</b></i>
         <i><span class="dot" style="background:var(--clay)"></span>Potential US estate tax <b class="num" id="tax-v">—</b></i>
       </div>
+    </div>
+  </div>
+
+  <div class="freeze">
+    <div class="freeze-n">12–18<span>months</span></div>
+    <div>
+      <h4>And they may not be able to touch it meanwhile</h4>
+      <p>The plan most people have — my family will just sell it and move the money out — runs into a document called a
+      transfer certificate, which exists precisely to stop assets moving before the tax is settled. The IRS states its
+      processing time is <b>12 to 18 months from receiving all the documentation</b>. Selling later does not help either:
+      the tax is assessed on the value at the <b>date of death</b>, so it crystallised the day you died, whatever the
+      market did afterwards.</p>
     </div>
   </div>
 
@@ -225,7 +242,19 @@ footer{padding:28px 0 60px;font-size:12px;color:var(--t3-text);line-height:1.65}
   </table>
   <p style="font-size:13px;color:var(--t3-text)">Computed from the statutory schedule below, less the US$13,000 credit. Assumes no deductions and no treaty relief. Your row is highlighted.</p>
 
-  <h2>What changes your exposure</h2>
+  <div class="handoff">
+    <h3 style="margin-top:0">See how the alternatives actually compare</h3>
+    <p>Domicile is one input among several — annual cost, dividend withholding and what your
+    platform offers all move the answer too. Our fund selector lets you weigh them together
+    rather than optimising for this one tax and discovering the bill somewhere else.</p>
+    <p><a href="https://phuazz.github.io/etf-starter-sg/" rel="noopener">Open the fund selector →</a></p>
+    <p class="mocknote"><b>Mock placeholder.</b> This currently points at an existing
+    third-party tool for demonstration. Before publication it must be replaced by our own
+    version — de-identified, and with the fund-level recommendations stripped out, since
+    naming a product as the answer is a line this site does not cross.</p>
+  </div>
+
+  <h2 id="mech">What changes your exposure</h2>
   <p>Three mechanisms. None of them is a recommendation, and each carries trade-offs
   that this tool does not price.</p>
 
@@ -315,30 +344,28 @@ function tentative(a){
 function estateTax(us){ return Math.max(0, tentative(us)-CREDIT); }
 
 function update(){
-  const pf=numOf($('pf')), sh=Math.min(Math.max(numOf($('sh')),0),100), fx=FX;
+  const exposedSgd = numOf($('us')), fx = FX;
   $('fx-disp').textContent = 'S$1 = US$'+FX.toFixed(4);
   $('fx-asof').textContent = 'rate as at '+FX_ASOF+' · '+FX_SOURCE;
-  const exposedSgd = pf*sh/100;
   const exposedUsd = exposedSgd*fx;
   const taxUsd = estateTax(exposedUsd);
   const taxSgd = fx>0 ? taxUsd/fx : 0;
 
-  $('exposed').textContent = 'S$'+fmt(exposedSgd);
   $('tax').textContent = 'S$'+fmt(taxSgd);
+  $('keep').textContent = 'S$'+fmt(exposedSgd-taxSgd);
   $('d-us').textContent = 'S$'+fmt(taxSgd);
   $('tax-v').textContent = 'S$'+fmt(taxSgd);
-  $('keep-v').textContent = 'S$'+fmt(pf-taxSgd);
+  $('keep-v').textContent = 'S$'+fmt(exposedSgd-taxSgd);
 
   const effOnExposed = exposedSgd>0 ? taxUsd/exposedUsd*100 : 0;
-  const effOnAll = pf>0 ? taxSgd/pf*100 : 0;
   $('sub').textContent = exposedSgd<=0
-    ? 'No US-situated assets on these inputs — nothing to compute.'
+    ? 'Nothing held in US-situated assets — nothing to compute.'
     : (taxUsd<=0
-        ? 'Below the US$60,000 threshold (US$'+fmt(exposedUsd)+') — the unified credit covers it entirely.'
-        : effOnExposed.toFixed(1)+'% of the exposed assets · '+effOnAll.toFixed(1)+'% of the whole portfolio · US$'+fmt(taxUsd)+' assessed');
+        ? 'Below the US$60,000 threshold (you hold US$'+fmt(exposedUsd)+') — the unified credit covers it entirely.'
+        : effOnExposed.toFixed(1)+'% of what you hold there · US$'+fmt(taxUsd)+' assessed on US$'+fmt(exposedUsd));
 
-  // split bar — proportion of the WHOLE portfolio
-  const taxPct = pf>0 ? Math.min(taxSgd/pf*100,100) : 0;
+  // split bar — proportion of the EXPOSED holdings
+  const taxPct = exposedSgd>0 ? Math.min(taxSgd/exposedSgd*100,100) : 0;
   $('sp-keep').style.width=(100-taxPct)+'%';
   $('sp-tax').style.width=taxPct+'%';
   $('sp-keep').textContent = taxPct<88 ? (100-taxPct).toFixed(0)+'%' : '';
@@ -355,7 +382,7 @@ function update(){
 }
 
 /* Two-way binding, house numeral rules: grouped >= 1,000, so text inputs not number. */
-[['pf','pf-r',1],['sh','sh-r',0]].forEach(([tid,rid,dp])=>{
+[['us','us-r',1]].forEach(([tid,rid,dp])=>{
   const t=$(tid), r=$(rid);
   r.addEventListener('input',()=>{ const v=+r.value; t.value = dp===2?v.toFixed(2):(v>=1000?fmt(v):String(v)); update(); });
   t.addEventListener('input',()=>{ const v=numOf(t); if(v>=+r.min&&v<=+r.max) r.value=v; update(); });
